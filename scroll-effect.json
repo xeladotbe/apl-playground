@@ -71,7 +71,7 @@
                 "type": "SetValue",
                 "componentId": "heading",
                 "property": "opacity",
-                "value": "${Math.max(1 - (event.source.value * 6.5), 0)}"
+                "value": "${Math.max(((100 - ((event.source.value * 6.5) * 100)) / 100), 0)}"
               },
               {
                 "type": "AnimateItem",
