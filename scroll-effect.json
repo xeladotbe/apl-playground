@@ -72,6 +72,22 @@
                 "componentId": "heading",
                 "property": "opacity",
                 "value": "${Math.max(1 - (event.source.value * 6.5), 0)}"
+              },
+              {
+                "type": "AnimateItem",
+                "componentId": "heading",
+                "duration": 500,
+                "value": [
+                  {
+                    "property": "transform",
+                    "from": {
+                      "scale": 1
+                    },
+                    "to": {
+                      "scale": "${Math.max(((100 - (event.source.value * 100)) / 100), 0)}"
+                    }
+                  }
+                ]
               }
             ],
             "height": "100%",
