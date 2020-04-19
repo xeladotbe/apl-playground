@@ -27,7 +27,68 @@
   },
   "onMount": [],
   "graphics": {},
-  "commands": {},
+  "commands": {
+    "PasscodeItemPressed": {
+      "parameters": [{
+        "name": "position",
+        "default": "relative"
+      }, {
+        "name": "value",
+        "default": 1
+      }],
+      "commands": [{
+        "type": "SetPage",
+        "componentId": "passcodePager0",
+        "position": "${position}",
+        "value": "${value}"
+      }, {
+        "type": "SetPage",
+        "componentId": "passcodePager1",
+        "position": "${position}",
+        "value": "${value}"
+      }, {
+        "type": "SetPage",
+        "componentId": "passcodePager2",
+        "position": "${position}",
+        "value": "${value}"
+      }, {
+        "type": "SetPage",
+        "componentId": "passcodePager3",
+        "position": "${position}",
+        "value": "${value}"
+      }, {
+        "type": "SetPage",
+        "componentId": "passcodePager4",
+        "position": "${position}",
+        "value": "${value}"
+      }, {
+        "type": "SetPage",
+        "componentId": "passcodePager5",
+        "position": "${position}",
+        "value": "${value}"
+      }, {
+        "type": "SetPage",
+        "componentId": "passcodePager6",
+        "position": "${position}",
+        "value": "${value}"
+      }, {
+        "type": "SetPage",
+        "componentId": "passcodePager7",
+        "position": "${position}",
+        "value": "${value}"
+      }, {
+        "type": "SetPage",
+        "componentId": "passcodePager8",
+        "position": "${position}",
+        "value": "${value}"
+      }, {
+        "type": "SetPage",
+        "componentId": "passcodePager9",
+        "position": "${position}",
+        "value": "${value}"
+      }]
+    }
+  },
   "layouts": {},
   "mainTemplate": {
     "parameters": [
@@ -172,39 +233,116 @@
                 "spacing": 40,
                 "items": [
                   {
-                    "type": "TouchWrapper",
+                    "type": "Pager",
+                    "navigation": "none",
+                    "id": "passcodePager${data}",
                     "width": 80,
                     "height": 80,
                     "spacing": 40,
-                    "onPress": [
-                      {
-                        "type": "SetPage",
-                        "componentId": "invisiblePager",
-                        "position": "relative",
-                        "value": 1
-                      }
+                    "bind": [{
+                      "name": "id",
+                      "value": "${data}"
+                    }],
+                    "data": [
+                      "0",
+                      "1",
+                      "2",
+                      "3"
                     ],
-                    "item": {
-                      "type": "Frame",
-                      "borderColor": "white",
-                      "inheritParentState": true,
-                      "style": "inputFieldItem",
-                      "borderWidth": 1,
-                      "borderRadius": 80,
+                    "items": [{
+                      "type": "TouchWrapper",
                       "width": "100%",
                       "height": "100%",
+                      "onPress": [
+                        {
+                          "type": "PasscodeItemPressed",
+                          "position": "relative",
+                          "value": 1
+                        },
+                        {
+                          "type": "SetPage",
+                          "componentId": "invisiblePager",
+                          "position": "relative",
+                          "value": 1
+                        },
+                        {
+                          "type": "SetPage",
+                          "componentId": "passcodePager${id}"
+                        },
+                        {
+                          "when": "${index == 3}",
+                          "type": "Parallel",
+                          "commands": [{
+                            "type": "Sequential",
+                            "commands": [{
+                              "type": "AnimateItem",
+                              "easing": "ease-in-out",
+                              "duration": 80,
+                              "componentId": "inputField",
+                              "repeatMode": "reverse",
+                              "repeatCount": 6,
+                              "value": [{
+                                "property": "transform",
+                                "from": [
+                                  {
+                                    "translateX": -10
+                                  }
+                                ],
+                                "to": [
+                                  {
+                                    "translateX": 10
+                                  }
+                                ]
+                              }]  
+                            }, {
+                              "type": "AnimateItem",
+                              "easing": "ease-in-out",
+                              "duration": 80,
+                              "componentId": "inputField",
+                              "value": [{
+                                "property": "transform",
+                                "from": [
+                                  {
+                                    "translateX": 10
+                                  }
+                                ],
+                                "to": [
+                                  {
+                                    "translateX": 0
+                                  }
+                                ]
+                              }]  
+                            }]
+                          }, 
+                          {
+                            "type": "PasscodeItemPressed",
+                            "position": "absolute",
+                            "value": 0
+                          }]
+                        }
+                      ],
                       "item": {
-                        "type": "Text",
-                        "textAlign": "center",
-                        "textAlignVertical": "center",
-                        "lineHeight": 1,
-                        "fontSize": 32,
-                        "fontWeight": 300,
+                        "type": "Frame",
+                        "borderColor": "white",
+                        "inheritParentState": true,
+                        "style": "inputFieldItem",
+                        "borderWidth": 1,
+                        "borderRadius": 80,
                         "width": "100%",
                         "height": "100%",
-                        "text": "${data}"
+                        "item": {
+                          "type": "Text",
+                          "textAlign": "center",
+                          "textAlignVertical": "center",
+                          "lineHeight": 1,
+                          "fontSize": 32,
+                          "fontWeight": 300,
+                          "width": "100%",
+                          "height": "100%",
+                          "text": "${id}"
+                        }
                       }
-                    }
+                    }]
                   }
                 ]
               }
