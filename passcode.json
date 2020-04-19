@@ -1,0 +1,217 @@
+{
+  "type": "APL",
+  "version": "1.3",
+  "settings": {
+    "idleTimeout": 300000
+  },
+  "theme": "dark",
+  "import": [],
+  "resources": [],
+  "styles": {
+    "inputFieldIndicator": {
+      "values": [
+        {
+          "when": "${state.disabled}",
+          "backgroundColor": "white"
+        }
+      ]
+    },
+    "inputFieldItem": {
+      "values": [
+        {
+          "when": "${state.pressed}",
+          "backgroundColor": "rgba(255, 255, 255, .5)"
+        }
+      ]
+    }
+  },
+  "onMount": [],
+  "graphics": {},
+  "commands": {},
+  "layouts": {},
+  "mainTemplate": {
+    "parameters": [
+      "payload"
+    ],
+    "items": [
+      {
+        "type": "Container",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "items": [
+          {
+            "type": "Image",
+            "width": "100vw",
+            "height": "100vh",
+            "source": "https://wallpaperaccess.com/full/95561.jpg",
+            "overlayColor": "rgba(0, 0, 0, .375)",
+            "scale": "best-fill",
+            "position": "absolute",
+            "top": 0,
+            "left": 0
+          },
+          {
+            "type": "Pager",
+            "navigation": "wrap",
+            "id": "invisiblePager",
+            "width": 0,
+            "height": 0,
+            "initialPage": 3,
+            "data": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "onPageChanged": [
+              {
+                "type": "SetValue",
+                "componentId": "passcodeCharacter${event.source.value}",
+                "property": "disabled",
+                "value": true
+              },
+              {
+                "when": "${event.source.value == 3}",
+                "type": "Parallel",
+                "commands": [
+                  {
+                    "type": "SetValue",
+                    "componentId": "passcodeCharacter0",
+                    "property": "disabled",
+                    "value": false
+                  },
+                  {
+                    "type": "SetValue",
+                    "componentId": "passcodeCharacter1",
+                    "property": "disabled",
+                    "value": false
+                  },
+                  {
+                    "type": "SetValue",
+                    "componentId": "passcodeCharacter2",
+                    "property": "disabled",
+                    "value": false
+                  },
+                  {
+                    "type": "SetValue",
+                    "componentId": "passcodeCharacter3",
+                    "property": "disabled",
+                    "value": false
+                  }
+                ]
+              }
+            ],
+            "items": [
+              {
+                "type": "Text",
+                "text": "${data}"
+              }
+            ]
+          },
+          {
+            "type": "Text",
+            "text": "Enter passcode",
+            "fontSize": "32dp",
+            "fontWeight": 400,
+            "paddingBottom": 24
+          },
+          {
+            "type": "Container",
+            "paddingBottom": 48,
+            "direction": "row",
+            "data": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "items": [
+              {
+                "type": "Frame",
+                "id": "passcodeCharacter${data}",
+                "style": "inputFieldIndicator",
+                "width": 20,
+                "height": 20,
+                "spacing": 20,
+                "borderRadius": 20,
+                "borderColor": "white",
+                "borderWidth": 1
+              }
+            ]
+          },
+          {
+            "type": "Container",
+            "id": "inputField",
+            "data": [
+              [
+                "1",
+                "2",
+                "3"
+              ],
+              [
+                "4",
+                "5",
+                "6"
+              ],
+              [
+                "7",
+                "8",
+                "9"
+              ],
+              [
+                "0"
+              ]
+            ],
+            "items": [
+              {
+                "type": "Container",
+                "direction": "row",
+                "data": "${data}",
+                "justifyContent": "center",
+                "alignItems": "center",
+                "spacing": 40,
+                "items": [
+                  {
+                    "type": "TouchWrapper",
+                    "width": 80,
+                    "height": 80,
+                    "spacing": 40,
+                    "onPress": [
+                      {
+                        "type": "SetPage",
+                        "componentId": "invisiblePager",
+                        "position": "relative",
+                        "value": 1
+                      }
+                    ],
+                    "item": {
+                      "type": "Frame",
+                      "borderColor": "white",
+                      "inheritParentState": true,
+                      "style": "inputFieldItem",
+                      "borderWidth": 1,
+                      "borderRadius": 80,
+                      "width": "100%",
+                      "height": "100%",
+                      "item": {
+                        "type": "Text",
+                        "textAlign": "center",
+                        "textAlignVertical": "center",
+                        "lineHeight": 1,
+                        "fontSize": 32,
+                        "fontWeight": 300,
+                        "width": "100%",
+                        "height": "100%",
+                        "text": "${data}"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
