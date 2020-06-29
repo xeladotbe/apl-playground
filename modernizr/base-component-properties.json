@@ -1,0 +1,308 @@
+{
+  "type": "APL",
+  "version": "1.3",
+  "settings": {},
+  "theme": "dark",
+  "import": [],
+  "resources": [],
+  "styles": {},
+  "onMount": [],
+  "graphics": {},
+  "commands": {},
+  "layouts": {
+    "BaseComponentProperties": {
+      "parameters": [],
+      "item": {
+        "type": "CustomFrame",
+        "headline": "Base Component Properties",
+        "items": [
+          {
+            "type": "Option",
+            "label": "accessibilityLabel",
+            "value": "${environment.aplVersion >= '1.1'}",
+            "description": "Voice-over will read this string when the user selects this component"
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "bind",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "Expressions to add to the data binding context"
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "description",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "Optional description of this component"
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "checked",
+            "value": "${environment.aplVersion >= '1.1'}",
+            "description": "If true, this component has the checked state set."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "disabled",
+            "value": "${environment.aplVersion >= '1.1'}",
+            "description": "If true, this component does not respond to touch or focus."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "display",
+            "value": "${environment.aplVersion >= '1.1'}",
+            "description": "Determines whether the component is displayed on the screen."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "entity",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "Opaque data used to clarify references in Alexa."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "height",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "The requested height of the component."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "id",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "Reference name of the component, used for navigation and events."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "inheritParentState",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "When true, use the parent's state."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "maxHeight",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "The maximum allowed height of this component."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "maxWidth",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "The maximum allowed width of this component."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "minHeight",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "The minimum allowed height of this component."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "minWidth",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "The minimum allowed width of this component."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "onMount",
+            "value": "${environment.aplVersion >= '1.1'}",
+            "description": "Command to execute when the component is first displayed."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "onCursorEnter",
+            "value": "${environment.aplVersion >= '1.2'}",
+            "description": "Command(s) to execute when a cursor (mouse pointer) enters the component's active region."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "onCursorExit",
+            "value": "${environment.aplVersion >= '1.2'}",
+            "description": "Command(s) to execute when a cursor (mouse pointer) exits the component's active region."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "opacity",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "Opacity of this component and children."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "paddingBottom",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "Space to add to the bottom of this component."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "paddingLeft",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "Space to add to the left of this component."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "paddingRight",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "Space to add to the right of this component."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "paddingTop",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "Space to add to the top of this component."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "shadowColor",
+            "value": "${environment.aplVersion >= '1.2'}",
+            "description": "Shadow color"
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "shadowHorizontalOffset",
+            "value": "${environment.aplVersion >= '1.2'}",
+            "description": "Horizontal offset of the shadow"
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "shadowRadius",
+            "value": "${environment.aplVersion >= '1.2'}",
+            "description": "Shadow blur radius"
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "shadowVerticalOffset",
+            "value": "${environment.aplVersion >= '1.2'}",
+            "description": "Vertical offset of the shadow"
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "speech",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "Transformed speech information for audio playback"
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "style",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "Named style or styles to apply."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "transform",
+            "value": "${environment.aplVersion >= '1.1'}",
+            "description": "Array of transformations."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "type",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "The type of the component."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "when",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "If it evaluates to false, this component does not inflate."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "width",
+            "value": "${environment.aplVersion == null || environment.aplVersion >= '1.0'}",
+            "description": "The requested width of this component."
+          }
+        ]
+      }
+    }
+  }
+}

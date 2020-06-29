@@ -1,0 +1,493 @@
+{
+  "type": "APL",
+  "version": "1.3",
+  "settings": {},
+  "theme": "dark",
+  "import": [
+    {
+      "name": "alexa-styles",
+      "version": "1.0.0"
+    },
+    {
+      "name": "alexa-viewport-profiles",
+      "version": "1.0.0"
+    },
+    {
+      "name": "modernizr-environment",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/environment.json"
+    },
+    {
+      "name": "modernizr-viewport",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/viewport.json"
+    },
+    {
+      "name": "modernizr-base-component-properties",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/base-component-properties.json"
+    }
+  ],
+  "resources": [],
+  "styles": {
+    "checkboxInnerInactive": {
+      "values": [
+        {
+          "backgroundColor": "#ffffff"
+        }
+      ]
+    },
+    "checkboxInnerActive": {
+      "values": [
+        {
+          "backgroundColor": "#00b3e1"
+        }
+      ]
+    }
+  },
+  "onMount": [],
+  "graphics": {
+    "arrowLeft": {
+      "parameters": [
+        {
+          "name": "fillColor",
+          "default": "#ffffff"
+        },
+        {
+          "name": "strokeColor",
+          "default": "transparent"
+        }
+      ],
+      "type": "AVG",
+      "version": "1.0",
+      "height": 129,
+      "width": 129,
+      "items": {
+        "type": "path",
+        "fill": "${fillColor}",
+        "stroke": "${strokeColor}",
+        "strokeWidth": "5",
+        "pathData": "m88.6,121.3c0.8,0.8 1.8,1.2 2.9,1.2s2.1-0.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-51-51 51-51c1.6-1.6 1.6-4.2 0-5.8s-4.2-1.6-5.8,0l-54,53.9c-1.6,1.6-1.6,4.2 0,5.8l54,53.9z"
+      }
+    }
+  },
+  "commands": {},
+  "layouts": {
+    "Group": {
+      "parameters": [
+        "items",
+        "label"
+      ],
+      "item": {
+        "type": "Container",
+        "items": [
+          {
+            "when": "${label}",
+            "type": "Text",
+            "text": "${label}",
+            "color": "#00b3e1",
+            "fontSize": "@fontSizeXSmall",
+            "fontWeight": "@fontWeightMedium",
+            "textAlign": "${@viewportProfile != @hubRoundSmall ? 'left' : 'center'}"
+          },
+          {
+            "when": "${label}",
+            "type": "Separator"
+          },
+          {
+            "type": "Container",
+            "items": "${items}"
+          }
+        ]
+      }
+    },
+    "Link": {
+      "parameters": [
+        {
+          "name": "label"
+        },
+        {
+          "name": "description"
+        },
+        {
+          "name": "page",
+          "default": 0
+        }
+      ],
+      "item": {
+        "type": "TouchWrapper",
+        "id": "${id}TouchWrapper",
+        "style": "settingsOptionWrapper",
+        "onPress": [
+          {
+            "type": "SetPage",
+            "componentId": "navigation",
+            "value": "${page}"
+          }
+        ],
+        "display": "${display}",
+        "disabled": "${disabled}",
+        "item": {
+          "type": "Container",
+          "width": "100%",
+          "paddingRight": "${@viewportProfile != @hubRoundSmall ? 0 : @spacingXXLarge}",
+          "paddingLeft": "${@viewportProfile != @hubRoundSmall ? 0 : @spacingXXLarge}",
+          "direction": "row",
+          "items": [
+            {
+              "type": "Container",
+              "grow": 0,
+              "shrink": 1,
+              "width": "100%",
+              "items": [
+                {
+                  "type": "Text",
+                  "text": "${label}",
+                  "style": "settingsOption",
+                  "fontSize": "${@fontSizeRegular + 10}"
+                },
+                {
+                  "when": "${description}",
+                  "type": "Text",
+                  "text": "${description}",
+                  "fontWeight": "@fontWeightBold",
+                  "fontSize": "${@fontSizeXXSmall}"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "Option": {
+      "parameters": [
+        {
+          "name": "label"
+        },
+        {
+          "name": "description"
+        },
+        {
+          "name": "isBoolean",
+          "default": true
+        },
+        {
+          "name": "value"
+        }
+      ],
+      "item": {
+        "type": "Container",
+        "width": "100%",
+        "paddingRight": "${@viewportProfile != @hubRoundSmall ? 0 : @spacingXXLarge}",
+        "paddingLeft": "${@viewportProfile != @hubRoundSmall ? 0 : @spacingXXLarge}",
+        "direction": "row",
+        "items": [
+          {
+            "type": "Container",
+            "grow": 0,
+            "shrink": 1,
+            "width": "100%",
+            "items": [
+              {
+                "type": "Text",
+                "text": "${label}",
+                "style": "settingsOption",
+                "fontSize": "${@fontSizeRegular + 10}"
+              },
+              {
+                "when": "${description}",
+                "type": "Text",
+                "text": "${description}",
+                "fontWeight": "@fontWeightBold",
+                "fontSize": "${@fontSizeXXSmall}"
+              }
+            ]
+          },
+          {
+            "when": "${isBoolean == true}",
+            "type": "Container",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "height": "100%",
+            "items": [
+              {
+                "type": "Pager",
+                "height": "32dp",
+                "width": "70dp",
+                "navigation": "none",
+                "initialPage": "${value == true ? 1 : 0}",
+                "items": [
+                  {
+                    "type": "Frame",
+                    "borderWidth": 2,
+                    "borderRadius": "20dp",
+                    "borderColor": "#ffffff",
+                    "height": "100%",
+                    "width": "100%",
+                    "item": {
+                      "type": "Container",
+                      "width": "100%",
+                      "height": "100%",
+                      "alignItems": "start",
+                      "justifyContent": "center",
+                      "paddingTop": "2dp",
+                      "paddingRight": "2dp",
+                      "paddingBottom": "2dp",
+                      "paddingLeft": "5dp",
+                      "items": [
+                        {
+                          "type": "Frame",
+                          "borderRadius": "18dp",
+                          "width": "18dp",
+                          "height": "18dp",
+                          "style": "checkboxInnerInactive"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "type": "Frame",
+                    "borderWidth": 2,
+                    "borderRadius": "20dp",
+                    "borderColor": "#00b3e1",
+                    "height": "100%",
+                    "width": "100%",
+                    "item": {
+                      "type": "Container",
+                      "width": "100%",
+                      "height": "100%",
+                      "alignItems": "end",
+                      "justifyContent": "center",
+                      "paddingTop": "2dp",
+                      "paddingRight": "5dp",
+                      "paddingBottom": "2dp",
+                      "paddingLeft": "2dp",
+                      "items": [
+                        {
+                          "type": "Frame",
+                          "borderRadius": "18dp",
+                          "width": "18dp",
+                          "height": "18dp",
+                          "style": "checkboxInnerActive"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "when": "${isBoolean != true}",
+            "type": "Container",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "height": "100%",
+            "items": [
+              {
+                "type": "Text",
+                "text": "${value}"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Separator": {
+      "item": {
+        "type": "Container",
+        "items": [
+          {
+            "type": "Frame",
+            "backgroundColor": "#222",
+            "height": "1dp",
+            "width": "100%"
+          }
+        ],
+        "paddingTop": "@spacingSmall",
+        "paddingBottom": "@spacingSmall"
+      }
+    },
+    "Headline": {
+      "parameters": [
+        "value"
+      ],
+      "item": {
+        "type": "Container",
+        "paddingRight": "${@viewportProfile == @hubRoundSmall ? @spacingXLarge : 0}",
+        "paddingLeft": "${@viewportProfile == @hubRoundSmall ? @spacingXLarge : 0}",
+        "paddingBottom": "${@viewportProfile == @hubRoundSmall ? @spacingXLarge : 0}",
+        "alignItems": "${@viewportProfile == @hubRoundSmall ? 'center': 'start'}",
+        "justifyContent": "${@viewportProfile == @hubRoundSmall ? 'center': 'start'}",
+        "width": "100%",
+        "items": [
+          {
+            "type": "TouchWrapper",
+            "width": "100%",
+            "paddingTop": "${@viewportProfile == @hubRoundSmall ? @spacingXXXLarge : @spacingLarge}",
+            "onPress": [
+              {
+                "type": "SetPage",
+                "componentId": "navigation",
+                "value": 0
+              }
+            ],
+            "item": {
+              "type": "Container",
+              "inheritParentState": true,
+              "direction": "row",
+              "alignItems": "center",
+              "justifyContent": "${@viewportProfile == @hubRoundSmall ? 'center': 'start'}",
+              "items": [
+                {
+                  "type": "Container",
+                  "width": "${@viewportProfile == @hubRoundSmall ? '30dp' : @spacingXXLarge}",
+                  "paddingRight": "${@viewportProfile == @hubRoundSmall ? @spacingLarge : 0}",
+                  "justifyContent": "center",
+                  "inheritParentState": true,
+                  "alignItems": "center",
+                  "items": [
+                    {
+                      "inheritParentState": true,
+                      "style": "settingsOption",
+                      "type": "VectorGraphic",
+                      "source": "arrowLeft",
+                      "height": "30dp",
+                      "width": "30dp",
+                      "scale": "best-fit"
+                    }
+                  ]
+                },
+                {
+                  "type": "Text",
+                  "inheritParentState": true,
+                  "style": "settingsOption",
+                  "text": "${value}",
+                  "fontWeight": "${@viewportProfile == @hubRoundSmall ? @fontWeightLight : @fontWeightBold}",
+                  "lineHeight": "@lineHeightCondensed",
+                  "fontSize": "${@viewportProfile == @hubRoundSmall ? @fontSizeSmall : @fontSizeXSmall}"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "CustomFrame": {
+      "parameters": [
+        "headline",
+        "items"
+      ],
+      "item": {
+        "type": "Frame",
+        "backgroundColor": "#151515",
+        "width": "100vw",
+        "height": "100vh",
+        "item": {
+          "type": "Container",
+          "width": "100%",
+          "height": "100%",
+          "items": [
+            {
+              "when": "${@viewportProfile != @hubRoundSmall && headline}",
+              "type": "Headline",
+              "value": "${headline}"
+            },
+            {
+              "type": "Container",
+              "grow": 0,
+              "shrink": 1,
+              "height": "100%",
+              "width": "100%",
+              "items": [
+                {
+                  "type": "ScrollView",
+                  "width": "100%",
+                  "height": "100%",
+                  "paddingBottom": "${@viewportProfile != @hubRoundSmall ? 0 : (@spacingXXXLarge + @spacingLarge)}",
+                  "item": {
+                    "type": "Container",
+                    "width": "100%",
+                    "paddingTop": "${@viewportProfile == @hubRoundSmall ? 0 : @spacingXXLarge}",
+                    "paddingRight": "${@viewportProfile == @hubRoundSmall ? 0 : @spacingXXLarge}",
+                    "paddingBottom": "${@viewportProfile == @hubRoundSmall ? 0 : @spacingXXLarge}",
+                    "paddingLeft": "${@viewportProfile == @hubRoundSmall ? 0 : @spacingXXLarge}",
+                    "items": [
+                      {
+                        "when": "${@viewportProfile == @hubRoundSmall && headline}",
+                        "type": "Headline",
+                        "value": "${headline}"
+                      },
+                      "${items}"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "Navigation": {
+      "item": {
+        "type": "CustomFrame",
+        "items": [
+          {
+            "type": "Link",
+            "label": "Environment",
+            "page": 1
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Link",
+            "label": "Viewport",
+            "page": 2
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Link",
+            "label": "Base Component Properties",
+            "page": 3
+          }
+        ]
+      }
+    },
+    "Modernizr": {
+      "item": {
+        "type": "Pager",
+        "width": "100vw",
+        "height": "100vh",
+        "id": "navigation",
+        "navigation": "none",
+        "items": [
+          {
+            "type": "Navigation"
+          },
+          {
+            "type": "Environment"
+          },
+          {
+            "type": "Viewport"
+          },
+          {
+            "type": "BaseComponentProperties"
+          }
+        ]
+      }
+    }
+  },
+  "mainTemplate": {
+    "parameters": [
+      "payload"
+    ],
+    "items": [
+      {
+        "type": "Modernizr"
+      }
+    ]
+  }
+}
