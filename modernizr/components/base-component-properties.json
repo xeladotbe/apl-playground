@@ -15,6 +15,7 @@
       "item": {
         "type": "CustomFrame",
         "headline": "Base Component Properties",
+        "componentId": "componentsNavigation",
         "items": [
           {
             "type": "Option",

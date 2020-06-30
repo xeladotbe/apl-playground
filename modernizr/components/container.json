@@ -1,0 +1,93 @@
+{
+  "type": "APL",
+  "version": "1.3",
+  "settings": {},
+  "theme": "dark",
+  "import": [],
+  "resources": [],
+  "styles": {},
+  "onMount": [],
+  "graphics": {},
+  "commands": {},
+  "layouts": {
+    "ContainerComponent": {
+      "parameters": [],
+      "item": {
+        "type": "CustomFrame",
+        "headline": "Container",
+        "componentId": "componentsNavigation",
+        "items": [
+          {
+            "type": "Option",
+            "label": "alignItems",
+            "value": true,
+            "description": "Alignment for children in the cross-axis."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "data",
+            "value": true,
+            "description": "Data to bind into this container."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "direction",
+            "value": true,
+            "description": "Direction that children will be laid out in."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "firstItem",
+            "value": true,
+            "description": "Component to include before all others."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "item(s)",
+            "value": true,
+            "description": "Component(s) used to lay out the data set."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "justifyContent",
+            "value": true,
+            "description": "How to distribute free space when there is room on the main axis. Defaults to start."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "lastItem",
+            "value": true,
+            "description": "Component to include after all others."
+          },
+          {
+            "type": "Separator"
+          },
+          {
+            "type": "Option",
+            "label": "numbered",
+            "value": true,
+            "description": "If true, assign ordinal numbers to children. Defaults to false."
+          }
+        ]
+      }
+    }
+  }
+}

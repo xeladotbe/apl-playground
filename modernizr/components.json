@@ -1,0 +1,235 @@
+{
+  "type": "APL",
+  "version": "1.3",
+  "settings": {},
+  "theme": "dark",
+  "import": [
+    {
+      "name": "modernizr-components-base-properties",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/components/base-component-properties.json"
+    },
+    {
+      "name": "modernizr-components-actionable-properties",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/components/actionable-component-properties.json"
+    },
+    {
+      "name": "modernizr-components-container",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/components/container.json"
+    },
+    {
+      "name": "modernizr-components-frame",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/components/frame.json"
+    },
+    {
+      "name": "modernizr-components-image",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/components/image.json"
+    },
+    {
+      "name": "modernizr-components-pager",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/components/pager.json"
+    },
+    {
+      "name": "modernizr-components-scrollview",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/components/scrollview.json"
+    },
+    {
+      "name": "modernizr-components-sequence",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/components/sequence.json"
+    },
+    {
+      "name": "modernizr-components-text",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/components/text.json"
+    },
+    {
+      "name": "modernizr-components-touchwrapper",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/components/touchwrapper.json"
+    },
+    {
+      "name": "modernizr-components-vectorgraphic",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/components/vectorgraphic.json"
+    },
+    {
+      "name": "modernizr-components-video",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/components/video.json"
+    }
+  ],
+  "resources": [],
+  "styles": {},
+  "onMount": [],
+  "graphics": {},
+  "commands": {},
+  "layouts": {
+    "Components": {
+      "parameters": [],
+      "item":           {
+        "type": "Pager",
+        "width": "100vw",
+        "height": "100vh",
+        "id": "componentsNavigation",
+        "initialPage": 0,
+        "navigation": "none",
+        "items": [
+          {
+            "type": "CustomFrame",
+            "headline": "Components",
+            "items": [
+              {
+                "type": "Link",
+                "componentId": "componentsNavigation",
+                "label": "Base Component Properties",
+                "page": 1
+              },
+              {
+                "type": "Separator"
+              },
+              {
+                "type": "Link",
+                "componentId": "componentsNavigation",
+                "label": "Actionable Component Properties",
+                "page": 2
+              },
+              {
+                "type": "Separator"
+              },
+              {
+                "type": "Link",
+                "componentId": "componentsNavigation",
+                "label": "Container",
+                "page": 3
+              },
+              {
+                "type": "Separator"
+              },
+              {
+                "type": "Link",
+                "componentId": "componentsNavigation",
+                "label": "Frame",
+                "page": 4
+              },
+              {
+                "type": "Separator"
+              },
+              {
+                "type": "Link",
+                "componentId": "componentsNavigation",
+                "label": "Image",
+                "page": 5
+              },
+              {
+                "type": "Separator"
+              },
+              {
+                "type": "Link",
+                "componentId": "componentsNavigation",
+                "label": "Pager",
+                "page": 6
+              },
+              {
+                "type": "Separator"
+              },
+              {
+                "type": "Link",
+                "componentId": "componentsNavigation",
+                "label": "ScrollView",
+                "page": 7
+              },
+              {
+                "type": "Separator"
+              },
+              {
+                "type": "Link",
+                "componentId": "componentsNavigation",
+                "label": "Sequence",
+                "page": 8
+              },
+              {
+                "type": "Separator"
+              },
+              {
+                "type": "Link",
+                "componentId": "componentsNavigation",
+                "label": "Text",
+                "page": 9
+              },
+              {
+                "type": "Separator"
+              },
+              {
+                "type": "Link",
+                "componentId": "componentsNavigation",
+                "label": "TouchWrapper",
+                "page": 10
+              },
+              {
+                "type": "Separator"
+              },
+              {
+                "type": "Link",
+                "componentId": "componentsNavigation",
+                "label": "VectorGraphic",
+                "page": 11
+              },
+              {
+                "type": "Separator"
+              },
+              {
+                "type": "Link",
+                "componentId": "componentsNavigation",
+                "label": "Video",
+                "page": 12
+              }
+            ]
+          },
+          {
+            "type": "BaseComponentProperties"
+          },
+          {
+            "type": "ActionableComponentProperties"
+          },
+          {
+            "type": "ContainerComponent"
+          },
+          {
+            "type": "FrameComponent"
+          },
+          {
+            "type": "ImageComponent"
+          },
+          {
+            "type": "PagerComponent"
+          },
+          {
+            "type": "ScrollViewComponent"
+          },
+          {
+            "type": "SequenceComponent"
+          },
+          {
+            "type": "TextComponent"
+          },
+          {
+            "type": "TouchWrapperComponent"
+          },
+          {
+            "type": "VectorGraphicComponent"
+          },
+          {
+            "type": "VideoComponent"
+          }
+        ]
+      }
+    }
+  }
+}

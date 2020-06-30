@@ -23,28 +23,23 @@
       "source": "https://www.alexandermartin.dev/modernizr/viewport.json"
     },
     {
-      "name": "modernizr-base-component-properties",
+      "name": "modernizr-commands",
       "version": "1.0.0",
-      "source": "https://www.alexandermartin.dev/modernizr/base-component-properties.json"
+      "source": "https://www.alexandermartin.dev/modernizr/commands.json"
+    },
+    {
+      "name": "modernizr-components",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/components.json"
+    },
+    {
+      "name": "modernizr-context",
+      "version": "1.0.0",
+      "source": "https://www.alexandermartin.dev/modernizr/context.json"
     }
   ],
   "resources": [],
-  "styles": {
-    "checkboxInnerInactive": {
-      "values": [
-        {
-          "backgroundColor": "#ffffff"
-        }
-      ]
-    },
-    "checkboxInnerActive": {
-      "values": [
-        {
-          "backgroundColor": "#00b3e1"
-        }
-      ]
-    }
-  },
+  "styles": {},
   "onMount": [],
   "graphics": {
     "arrowLeft": {
@@ -110,6 +105,10 @@
           "name": "description"
         },
         {
+          "name": "componentId",
+          "default": "navigation"
+        },
+        {
           "name": "page",
           "default": 0
         }
@@ -121,7 +120,7 @@
         "onPress": [
           {
             "type": "SetPage",
-            "componentId": "navigation",
+            "componentId": "${componentId}",
             "value": "${page}"
           }
         ],
@@ -240,7 +239,7 @@
                           "borderRadius": "18dp",
                           "width": "18dp",
                           "height": "18dp",
-                          "style": "checkboxInnerInactive"
+                          "backgroundColor": "#ffffff"
                         }
                       ]
                     }
@@ -268,7 +267,7 @@
                           "borderRadius": "18dp",
                           "width": "18dp",
                           "height": "18dp",
-                          "style": "checkboxInnerActive"
+                          "backgroundColor": "#00b3e1"
                         }
                       ]
                     }
@@ -310,7 +309,10 @@
     },
     "Headline": {
       "parameters": [
-        "value"
+        "value", {
+          "name": "componentId",
+          "default": "navigation"
+        }
       ],
       "item": {
         "type": "Container",
@@ -328,7 +330,7 @@
             "onPress": [
               {
                 "type": "SetPage",
-                "componentId": "navigation",
+                "componentId": "${componentId}",
                 "value": 0
               }
             ],
@@ -376,6 +378,7 @@
     "CustomFrame": {
       "parameters": [
         "headline",
+        "componentId",
         "items"
       ],
       "item": {
@@ -391,7 +394,8 @@
             {
               "when": "${@viewportProfile != @hubRoundSmall && headline}",
               "type": "Headline",
-              "value": "${headline}"
+              "value": "${headline}",
+              "componentId": "${componentId}"
             },
             {
               "type": "Container",
@@ -416,7 +420,8 @@
                       {
                         "when": "${@viewportProfile == @hubRoundSmall && headline}",
                         "type": "Headline",
-                        "value": "${headline}"
+                        "value": "${headline}",
+                        "componentId": "${componentId}"
                       },
                       "${items}"
                     ]
@@ -428,34 +433,6 @@
         }
       }
     },
-    "Navigation": {
-      "item": {
-        "type": "CustomFrame",
-        "items": [
-          {
-            "type": "Link",
-            "label": "Environment",
-            "page": 1
-          },
-          {
-            "type": "Separator"
-          },
-          {
-            "type": "Link",
-            "label": "Viewport",
-            "page": 2
-          },
-          {
-            "type": "Separator"
-          },
-          {
-            "type": "Link",
-            "label": "Base Component Properties",
-            "page": 3
-          }
-        ]
-      }
-    },
     "Modernizr": {
       "item": {
         "type": "Pager",
@@ -465,7 +442,46 @@
         "navigation": "none",
         "items": [
           {
-            "type": "Navigation"
+            "type": "CustomFrame",
+            "items": [
+              {
+                "type": "Link",
+                "label": "Environment",
+                "page": 1
+              },
+              {
+                "type": "Separator"
+              },
+              {
+                "type": "Link",
+                "label": "Viewport",
+                "page": 2
+              },
+              {
+                "type": "Separator"
+              },
+              {
+                "type": "Link",
+                "label": "Commands",
+                "page": 3
+              },
+              {
+                "type": "Separator"
+              },
+              {
+                "type": "Link",
+                "label": "Components",
+                "page": 4
+              },
+              {
+                "type": "Separator"
+              },
+              {
+                "type": "Link",
+                "label": "Initial data-binding context",
+                "page": 5
+              }
+            ]
           },
           {
             "type": "Environment"
@@ -474,7 +490,13 @@
             "type": "Viewport"
           },
           {
-            "type": "BaseComponentProperties"
+            "type": "Commands"
+          },
+          {
+            "type": "Components"
+          },
+          {
+            "type": "Context"
           }
         ]
       }

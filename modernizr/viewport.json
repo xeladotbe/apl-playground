@@ -4,7 +4,31 @@
   "settings": {},
   "theme": "dark",
   "import": [],
-  "resources": [],
+  "resources": [{
+    "string": {
+      "currentViewportProfile": "hubLandscapeLarge"
+    }
+  }, {
+    "when": "${@viewportProfile == @hubRoundSmall}",
+    "string": {
+      "currentViewportProfile": "hubRoundSmall"
+    }
+  }, {
+    "when": "${@viewportProfile == @hubLandscapeSmall}",
+    "string": {
+      "currentViewportProfile": "hubLandscapeSmall"
+    }
+  }, {
+    "when": "${@viewportProfile == @hubLandscapeMedium}",
+    "string": {
+      "currentViewportProfile": "hubLandscapeMedium"
+    }
+  }, {
+    "when": "${@viewportProfile == @tvLandscapeXLarge}",
+    "string": {
+      "currentViewportProfile": "tvLandscapeXLarge"
+    }
+  }],
   "styles": {},
   "onMount": [],
   "graphics": {},
@@ -16,6 +40,16 @@
         "type": "CustomFrame",
         "headline": "Viewport",
         "items": [
+          {
+            "type": "Option",
+            "label": "Profile",
+            "isBoolean": false,
+            "value": "@currentViewportProfile",
+            "description": "The profile specifies values for the parts of a viewport (shape, size, and so on)."
+          },
+          {
+            "type": "Separator"
+          },
           {
             "type": "Option",
             "label": "dpi",
