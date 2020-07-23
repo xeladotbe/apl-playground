@@ -454,7 +454,6 @@
           {
             "type": "VectorGraphic",
             "source": "ColorPicker",
-            "id": "foo",
             "width": "${@paletteWidth}",
             "height": "${@paletteHeight * .9}",
             "scale": "best-fit",
@@ -507,7 +506,6 @@
           {
             "type": "VectorGraphic",
             "source": "ColorSlider",
-            "id": "foo",
             "width": "${@paletteWidth}",
             "height": "${@paletteHeight * .1}",
             "scale": "best-fit",
