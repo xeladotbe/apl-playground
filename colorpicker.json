@@ -21,11 +21,7 @@
         "y",
         "r",
         "g",
-        "b",
-        {
-          "name": "rangePerColor",
-          "default": "${1 / 7}"
-        }
+        "b"
       ],
       "type": "AVG",
       "version": "1.1",
