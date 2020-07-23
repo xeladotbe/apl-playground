@@ -19,6 +19,7 @@
       "parameters": [
         "x",
         "y",
+        "h",
         "r",
         "g",
         "b"
@@ -27,6 +28,7 @@
       "version": "1.1",
       "width": "${@paletteWidth}",
       "height": "${@paletteHeight * .9}",
+      "description": "TODO -> colorRange / hsl is not working",
       "resources": [
         {
           "gradients": {
@@ -37,7 +39,7 @@
               ],
               "colorRange": [
                 "rgb(255, 255, 255)",
-                "rgb(255, 0, 0)"
+                "hsl(${h}, 100%, 50%)"
               ],
               "type": "linear",
               "x1": 0,
@@ -363,7 +365,7 @@
           "type": "SetValue",
           "componentId": "outter",
           "property": "h",
-          "value": "${Math.round(Math.clamp(0, (event.component.x - (30/2)) / (event.component.width - 30), 1) * 360)}"
+          "value": "${Math.round((Math.clamp(0, (event.component.x - (30/2)) / (event.component.width - 30), 1) * 360))}"
         }
       ]
     },
@@ -457,6 +459,7 @@
             "v": "${v}",
             "x": "${x}",
             "y": "${y}",
+            "h": "${Math.abs(h)}",
             "r": "${r}",
             "g": "${g}",
             "b": "${b}",
@@ -493,7 +496,7 @@
               },
               {
                 "type": "HSV2RGB",
-                "h": "${Math.abs(h)}",
+                "h": "${(100 * Math.abs(h) / 360) / 100}",
                 "s": "${Math.abs(s) / 100}",
                 "v": "${Math.abs(v) / 100}"
               }
@@ -529,7 +532,7 @@
               },
               {
                 "type": "HSV2RGB",
-                "h": "${Math.abs(h) / 100}",
+                "h": "${(100 * Math.abs(h) / 360) / 100}",
                 "s": "${Math.abs(s) / 100}",
                 "v": "${Math.abs(v) / 100}"
               }
@@ -541,7 +544,7 @@
             "position": "absolute",
             "right": 0,
             "top": 0,
-            "text": "rgb(${r}, ${g}, ${b})"
+            "text": "${h} rgb(${r}, ${g}, ${b})"
           }
         ]
       }
