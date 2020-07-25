@@ -4,6 +4,15 @@ The Colorpicker requires at least APL 1.4, only devices with touch are supported
 
 ![Preview](colorpicker.gif)
 
+
+## Properties
+
+| Name         | Type   | Default | Description                                                                                                                                                     |
+|--------------|--------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| width        | number | 100     | The width of the colorpicker.                                                                                                                                   |
+| height       | number | 100     | The height of the colorpicker.                                                                                                                                  |
+| colorChanged | Array  | []      | Commands to be executed when the color changes. The commands have access to the following variables: ${hue}, ${saturation}, ${value}, ${red}, ${green}, ${blue} |
+
 ## Authoring Tool
 
 Copy the APL document below into the authoring tool to test the colorpicker on your device.
