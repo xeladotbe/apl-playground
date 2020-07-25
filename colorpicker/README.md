@@ -2,6 +2,8 @@
 
 The Colorpicker requires at least APL 1.4, only devices with touch are supported.
 
+![Preview](colorpicker.gif)
+
 ## Authoring Tool
 
 Copy the APL document below into the authoring tool to test the colorpicker on your device.
