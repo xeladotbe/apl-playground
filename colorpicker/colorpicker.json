@@ -1,0 +1,500 @@
+{
+  "type": "APL",
+  "version": "1.4",
+  "settings": {},
+  "theme": "dark",
+  "import": [],
+  "resources": [
+    {
+      "numbers": {
+        "knobBorderWidth": 4
+      }
+    }
+  ],
+  "styles": {},
+  "onMount": [],
+  "graphics": {
+    "ColorPicker": {
+      "parameters": [
+        "colorPickerWidth",
+        "colorPickerHeight",
+        "knobSize",
+        "colorPickerX",
+        "colorPickerY",
+        "hue",
+        "red",
+        "green",
+        "blue"
+      ],
+      "type": "AVG",
+      "version": "1.1",
+      "width": "${colorPickerWidth}",
+      "height": "${colorPickerHeight}",
+      "resources": [
+        {
+          "gradients": {
+            "verticalGradient": {
+              "inputRange": [
+                0,
+                1
+              ],
+              "colorRange": [
+                "transparent",
+                "rgb(0, 0, 0)"
+              ],
+              "type": "linear",
+              "x1": 0,
+              "y1": 0,
+              "x2": 0,
+              "y2": 1
+            }
+          }
+        }
+      ],
+      "items": [
+        {
+          "type": "group",
+          "translateX": "${knobSize}",
+          "translateY": "${knobSize}",
+          "items": [
+            {
+              "type": "path",
+              "fill": {
+                "inputRange": [
+                  0,
+                  1
+                ],
+                "colorRange": [
+                  "rgb(255, 255, 255)",
+                  "hsl(${hue}, 100%, 50%)"
+                ],
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 1,
+                "y2": 0
+              },
+              "pathData": "M0,0 L${colorPickerWidth - (knobSize * 2)},0 L${colorPickerWidth - (knobSize * 2)},${colorPickerHeight - (knobSize * 2)} L0,${colorPickerHeight - (knobSize * 2)} Z"
+            },
+            {
+              "type": "path",
+              "fill": "@verticalGradient",
+              "pathData": "M0,0 L${colorPickerWidth - (knobSize * 2)},0 L${colorPickerWidth - (knobSize * 2)},${colorPickerHeight - (knobSize * 2)} L0,${colorPickerHeight - (knobSize * 2)} Z"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "translateX": "${Math.min(Math.max(colorPickerX, (knobSize + @knobBorderWidth)), (colorPickerWidth - (knobSize + @knobBorderWidth)))}",
+          "translateY": "${Math.min(Math.max(colorPickerY, (knobSize + @knobBorderWidth)), (colorPickerHeight - (knobSize + @knobBorderWidth)))}",
+          "items": [
+            {
+              "type": "path",
+              "fill": "rgb(${red}, ${green}, ${blue})",
+              "stroke": "#ffffff",
+              "strokeWidth": "@knobBorderWidth",
+              "pathData": "M-${knobSize},0a${knobSize},${knobSize} 0 1,0 ${(knobSize) * 2},0a${knobSize},${knobSize} 0 1,0 -${(knobSize) * 2},0"
+            }
+          ]
+        }
+      ]
+    },
+    "ColorSlider": {
+      "parameters": [
+        "colorSliderWidth",
+        "colorSliderHeight",
+        "colorSliderX",
+        "knobSize",
+        "hue"
+      ],
+      "type": "AVG",
+      "version": "1.1",
+      "width": "${colorSliderWidth}",
+      "height": "${colorSliderHeight}",
+      "resources": [
+        {
+          "gradients": {
+            "rainbow": {
+              "inputRange": [
+                0,
+                0.16666666666666666,
+                0.3333333333333333,
+                0.5,
+                0.6666666666666666,
+                0.8333333333333333,
+                1
+              ],
+              "colorRange": [
+                "rgb(255, 0, 0)",
+                "rgb(255, 255, 0)",
+                "rgb(0, 255, 0)",
+                "rgb(0, 255, 255)",
+                "rgb(0, 0, 255)",
+                "rgb(255, 0, 255)",
+                "rgb(255, 0, 0)"
+              ],
+              "type": "linear",
+              "x1": 0,
+              "y1": 0,
+              "x2": 1,
+              "y2": 0
+            }
+          }
+        }
+      ],
+      "items": [
+        {
+          "type": "group",
+          "translateX": "${knobSize}",
+          "translateY": "${knobSize}",
+          "items": [
+            {
+              "type": "path",
+              "fill": "@rainbow",
+              "pathData": "M0,0 L${colorSliderWidth - (knobSize * 2)},0 L${colorSliderWidth - (knobSize * 2)},${knobSize / 2} L0,${knobSize / 2} Z"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "translateY": "${knobSize + @knobBorderWidth}",
+          "translateX": "${Math.min(Math.max(colorSliderX, (knobSize + @knobBorderWidth)), (colorSliderWidth - (knobSize + @knobBorderWidth)))}",
+          "items": [
+            {
+              "type": "path",
+              "fill": "hsl(${hue}, 100%, 50%)",
+              "stroke": "#ffffff",
+              "strokeWidth": "@knobBorderWidth",
+              "pathData": "M-${knobSize},0a${knobSize},${knobSize} 0 1,0 ${(knobSize) * 2},0a${knobSize},${knobSize} 0 1,0 -${(knobSize) * 2},0"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "commands": {
+    "Noop": {
+      "commands": []
+    },
+    "UpdateColor": {
+      "description": "https://stackoverflow.com/a/54024653",
+      "parameters": [
+        "property",
+        "hue",
+        "saturation",
+        "n",
+        {
+          "name": "k",
+          "default": "${(n + hue / 60) % 6}"
+        }
+      ],
+      "commands": [
+        {
+          "type": "SetValue",
+          "componentId": "colorPicker",
+          "property": "${property}",
+          "value": "${Math.min(Math.round(Math.max(value - value * saturation * Math.max(Math.min(k, 4 - k, 1), 0), 0) * 255), 255)}"
+        }
+      ]
+    },
+    "HSV2RGB": {
+      "parameters": [
+        {
+          "name": "hue",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "saturation",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "default": 0
+        }
+      ],
+      "commands": [
+        {
+          "type": "UpdateColor",
+          "property": "red",
+          "hue": "${hue}",
+          "saturation": "${saturation}",
+          "value": "${value}",
+          "n": 5
+        },
+        {
+          "type": "UpdateColor",
+          "property": "green",
+          "hue": "${hue}",
+          "saturation": "${saturation}",
+          "value": "${value}",
+          "n": 3
+        },
+        {
+          "type": "UpdateColor",
+          "property": "blue",
+          "hue": "${hue}",
+          "saturation": "${saturation}",
+          "value": "${value}",
+          "n": 1
+        }
+      ]
+    },
+    "UpdateHue": {
+      "parameters": [
+        "event",
+        "knobSize"
+      ],
+      "commands": [
+        {
+          "type": "SetValue",
+          "componentId": "colorPicker",
+          "property": "hue",
+          "value": "${Math.round((Math.clamp(0, (event.component.x - (knobSize / 2)) / (event.component.width - knobSize), 1) * 360))}"
+        },
+        {
+          "type": "SetValue",
+          "componentId": "colorPicker",
+          "property": "colorSliderX",
+          "value": "${event.component.x}"
+        }
+      ]
+    },
+    "UpdateSaturationValue": {
+      "parameters": [
+        "event",
+        "colorPickerWidth",
+        "colorPickerHeight",
+        "knobSize"
+      ],
+      "commands": [
+        {
+          "type": "SetValue",
+          "componentId": "colorPicker",
+          "property": "saturation",
+          "value": "${Math.clamp(0, Math.round(100 * event.component.x / colorPickerWidth), 100)}"
+        },
+        {
+          "type": "SetValue",
+          "componentId": "colorPicker",
+          "property": "value",
+          "value": "${Math.clamp(0, (100 - Math.round(100 * event.component.y / colorPickerHeight)), 100)}"
+        },
+        {
+          "type": "SetValue",
+          "componentId": "colorPicker",
+          "property": "colorPickerX",
+          "value": "${event.component.x}"
+        },
+        {
+          "type": "SetValue",
+          "componentId": "colorPicker",
+          "property": "colorPickerY",
+          "value": "${event.component.y}"
+        }
+      ]
+    }
+  },
+  "layouts": {
+    "ColorPicker": {
+      "parameters": [
+        {
+          "name": "width",
+          "default": 100
+        },
+        {
+          "name": "height",
+          "default": 100
+        },
+        {
+          "name": "knobSize",
+          "default": "${width * (2 / 100)}"
+        },
+        {
+          "name": "colorPickerWidth",
+          "default": "${width}"
+        },
+        {
+          "name": "spacingBetweenElements",
+          "default": "${knobSize}"
+        },
+        {
+          "name": "colorPickerHeight",
+          "default": "${height * (90 / 100) - (spacingBetweenElements / 2)}"
+        },
+        {
+          "name": "colorSliderWidth",
+          "default": "${width}"
+        },
+        {
+          "name": "colorSliderHeight",
+          "default": "${height * (10 / 100) - (spacingBetweenElements / 2)}"
+        },
+        {
+          "name": "colorPickerUpdated",
+          "type": "any",
+          "default": []
+        },
+        {
+          "name": "colorSliderUpdated",
+          "type": "any",
+          "default": []
+        },
+        {
+          "name": "colorChanged",
+          "type": "any",
+          "default": []
+        }
+      ],
+      "item": {
+        "type": "Container",
+        "id": "colorPicker",
+        "bind": [
+          {
+            "name": "colorPickerX",
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "colorSliderX",
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "colorPickerY",
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "hue",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "saturation",
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "value",
+            "type": "number",
+            "value": 100
+          },
+          {
+            "name": "red",
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "green",
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "blue",
+            "type": "number",
+            "value": 0
+          }
+        ],
+        "onMount": [
+          {
+            "type": "HSV2RGB",
+            "hue": "${hue}",
+            "saturation": "${saturation / 100}",
+            "value": "${value / 100}"
+          }
+        ],
+        "items": [
+          {
+            "type": "VectorGraphic",
+            "source": "ColorPicker",
+            "width": "${colorPickerWidth}",
+            "height": "${colorPickerHeight}",
+            "scale": "best-fit",
+            "colorPickerWidth": "${colorPickerWidth}",
+            "colorPickerHeight": "${colorPickerHeight}",
+            "knobSize": "${knobSize}",
+            "hue": "${hue}",
+            "saturation": "${saturation}",
+            "value": "${value}",
+            "colorPickerX": "${colorPickerX}",
+            "colorPickerY": "${colorPickerY}",
+            "red": "${red}",
+            "green": "${green}",
+            "blue": "${blue}",
+            "onDown": [
+              {
+                "type": "Noop"
+              }
+            ],
+            "onUp": [
+              {
+                "type": "Noop"
+              },
+              "${colorPickerUpdated}"
+            ],
+            "onMove": [
+              {
+                "type": "UpdateSaturationValue",
+                "event": "${event}",
+                "colorPickerWidth": "${colorPickerWidth}",
+                "knobSize": "${knobSize}",
+                "colorPickerHeight": "${colorPickerHeight}"
+              },
+              {
+                "type": "HSV2RGB",
+                "hue": "${hue}",
+                "saturation": "${saturation / 100}",
+                "value": "${value / 100}"
+              },
+              "${colorChanged}"
+            ]
+          },
+          {
+            "type": "VectorGraphic",
+            "source": "ColorSlider",
+            "spacing": "${spacingBetweenElements}",
+            "width": "${colorSliderWidth}",
+            "height": "${colorSliderHeight}",
+            "colorSliderWidth": "${colorSliderWidth}",
+            "colorSliderHeight": "${colorSliderHeight}",
+            "scale": "best-fit",
+            "colorSliderX": "${colorSliderX}",
+            "knobSize": "${knobSize}",
+            "hue": "${hue}",
+            "onDown": [
+              {
+                "type": "Noop"
+              }
+            ],
+            "onUp": [
+              {
+                "type": "Noop"
+              },
+              "${colorSliderUpdated}"
+            ],
+            "onMove": [
+              {
+                "type": "UpdateHue",
+                "knobSize": "${knobSize}",
+                "event": "${event}"
+              },
+              {
+                "type": "HSV2RGB",
+                "hue": "${hue}",
+                "saturation": "${saturation / 100}",
+                "value": "${value / 100}"
+              },
+              "${colorChanged}"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "exports": {
+    "layouts": ["ColorPicker"]
+  }
+}
