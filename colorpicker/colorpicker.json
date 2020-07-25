@@ -197,6 +197,62 @@
         }
       ]
     },
+    "RGB2HSV": {
+      "parameters": [
+        {
+          "name": "rgb",
+          "default": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "red",
+          "default": "${100 * rgb[0] / 255}"
+        },
+        {
+          "name": "green",
+          "default": "${100 * rgb[1] / 255}"
+        },
+        {
+          "name": "blue",
+          "default": "${100 * rgb[2] / 255}"
+        },
+        {
+          "name": "v",
+          "default": "${Math.max(red, green, blue)}"
+        },
+        {
+          "name": "n",
+          "default": "${v - Math.min(red, green, blue)}"
+        },
+        {
+          "name": "h",
+          "default": "${n && ((v == red) ? (green - blue) / n : ((v == green) ? 2 + (blue - red) / n : 4 + (red - green) / n))}"
+        }
+      ],
+      "commands": [
+        {
+          "type": "SetValue",
+          "componentId": "colorPicker",
+          "property": "hue",
+          "value": "${Math.round(60 * (h < 0 ? h + 6 : h))}"
+        },
+        {
+          "type": "SetValue",
+          "componentId": "colorPicker",
+          "property": "saturation",
+          "value": "${Math.round((v && n/v) * 100)}"
+        },
+        {
+          "type": "SetValue",
+          "componentId": "colorPicker",
+          "property": "value",
+          "value": "${Math.round(v)}"
+        }
+      ]
+    },
     "HSV2RGB": {
       "parameters": [
         {
@@ -295,6 +351,39 @@
           "value": "${event.component.y}"
         }
       ]
+    },
+    "InitializeColorSlider": {
+      "parameters": ["rgb", "colorSliderWidth", "colorPickerWidth", "colorPickerHeight"],
+      "commands": [
+        {
+          "type": "RGB2HSV",
+          "rgb": "${rgb}"
+        },
+        {
+          "type": "SetValue",
+          "componentId": "colorPicker",
+          "property": "colorPickerX",
+          "value": "${colorSliderWidth * saturation / 100}"
+        },
+        {
+          "type": "SetValue",
+          "componentId": "colorPicker",
+          "property": "colorPickerY",
+          "value": "${(colorPickerHeight * (100 - value) / 100)}"
+        },
+        {
+          "type": "SetValue",
+          "componentId": "colorPicker",
+          "property": "colorSliderX",
+          "value": "${colorSliderWidth * hue / 360}"
+        },
+        {
+          "type": "HSV2RGB",
+          "hue": "${hue}",
+          "saturation": "${saturation / 100}",
+          "value": "${value / 100}"
+        }
+      ]
     }
   },
   "layouts": {
@@ -346,6 +435,14 @@
           "name": "colorChanged",
           "type": "any",
           "default": []
+        },
+        {
+          "name": "rgb",
+          "default": [
+            255,
+            255,
+            255
+          ]
         }
       ],
       "item": {
@@ -400,10 +497,24 @@
         ],
         "onMount": [
           {
-            "type": "HSV2RGB",
-            "hue": "${hue}",
-            "saturation": "${saturation / 100}",
-            "value": "${value / 100}"
+            "type": "Select",
+            "commands": [
+              {
+                "when": "${rgb[0] >= 0 && rgb[0] <= 255 && rgb[1] >= 0 && rgb[1] <= 255 && rgb[2] >= 0 && rgb[2] <= 255}",
+                "type": "InitializeColorSlider",
+                "colorPickerWidth": "${colorPickerWidth}",
+                "colorPickerHeight": "${colorPickerHeight}",
+                "colorSliderWidth": "${colorSliderWidth}",
+                "rgb": "${rgb}"
+              }
+            ],
+            "otherwise": [{
+              "type": "InitializeColorSlider",
+              "colorPickerWidth": "${colorPickerWidth}",
+              "colorPickerHeight": "${colorPickerHeight}",
+              "colorSliderWidth": "${colorSliderWidth}",
+              "rgb": [0, 0, 0]
+            }]
           }
         ],
         "items": [
@@ -495,6 +606,8 @@
     }
   },
   "exports": {
-    "layouts": ["ColorPicker"]
+    "layouts": [
+      "ColorPicker"
+    ]
   }
 }

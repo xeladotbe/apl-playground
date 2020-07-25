@@ -9,8 +9,9 @@ The Colorpicker requires at least APL 1.4, only devices with touch are supported
 
 | Name         | Type   | Default | Description                                                                                                                                                     |
 |--------------|--------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| width        | number | 100     | The width of the colorpicker.                                                                                                                                   |
-| height       | number | 100     | The height of the colorpicker.                                                                                                                                  |
+| width        | Number | 100     | The width of the colorpicker.                                                                                                                                   |
+| height       | Number | 100     | The height of the colorpicker.                                                                                                                                  |
+| rgb          | Array  | [255, 255, 255]     | The current set rgb color.                                                                                                                                  |
 | colorChanged | Array  | []      | Commands to be executed when the color changes. The commands have access to the following variables: ${hue}, ${saturation}, ${value}, ${red}, ${green}, ${blue} |
 
 ## Authoring Tool
