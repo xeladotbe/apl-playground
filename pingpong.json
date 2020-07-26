@@ -437,14 +437,6 @@
             "cpuPaddlePositionY": "${cpuPaddlePositionY}",
             "playerPaddlePositionX": "${playerPaddlePositionX}",
             "playerPaddlePositionY": "${playerPaddlePositionY}"
-          },
-          {
-            "type": "Text",
-            "position": "absolute",
-            "id": "debug",
-            "top": "10dp",
-            "right": "10dp",
-            "text": ""
           }
         ]
       }
