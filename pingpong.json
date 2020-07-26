@@ -210,7 +210,7 @@
           "type": "Select",
           "commands": [
             {
-              "when": "${paddleLeft < ballRight && paddleTop < ballBottom && paddleRight > ballLeft && paddleBottom > ballTop}",
+              "when": "${paddleLeft <= ballRight && paddleTop < ballBottom && paddleRight >= ballLeft && paddleBottom > ballTop}",
               "type": "Sequential",
               "commands": [
                 {
@@ -290,6 +290,23 @@
                 "minimumDelay": "${1000 / @framesPerSecond}",
                 "commands": [
                   {
+                    "when": "${(ballPositionX + @ballRadius < viewport.width / 2)}",
+                    "description": "ball collided with player",
+                    "type": "CheckCollision",
+                    "paddlePositionY": "${playerPaddlePositionY}",
+                    "paddlePositionX": "${playerPaddlePositionX}",
+                    "ballPositionX": "${ballPositionX}",
+                    "ballPositionY": "${ballPositionY}"
+                  },
+                  {
+                    "when": "${(ballPositionX + @ballRadius > viewport.width / 2)}",
+                    "type": "CheckCollision",
+                    "paddlePositionY": "${cpuPaddlePositionY}",
+                    "paddlePositionX": "${cpuPaddlePositionX}",
+                    "ballPositionX": "${ballPositionX}",
+                    "ballPositionY": "${ballPositionY}"
+                  },
+                  {
                     "when": "${!collided && ballPositionX - @ballRadius < 0}",
                     "type": "Sequential",
                     "description": "cpu wins",
@@ -341,23 +358,6 @@
                     "type": "SetValue",
                     "property": "ballVelocityY",
                     "value": "${ballVelocityY * -1}"
-                  },
-                  {
-                    "when": "${(ballPositionX + @ballRadius < viewport.width / 2)}",
-                    "description": "ball collided with player",
-                    "type": "CheckCollision",
-                    "paddlePositionY": "${playerPaddlePositionY}",
-                    "paddlePositionX": "${playerPaddlePositionX}",
-                    "ballPositionX": "${ballPositionX}",
-                    "ballPositionY": "${ballPositionY}"
-                  },
-                  {
-                    "when": "${(ballPositionX + @ballRadius > viewport.width / 2)}",
-                    "type": "CheckCollision",
-                    "paddlePositionY": "${cpuPaddlePositionY}",
-                    "paddlePositionX": "${cpuPaddlePositionX}",
-                    "ballPositionX": "${ballPositionX}",
-                    "ballPositionY": "${ballPositionY}"
                   }
                 ]
               }
