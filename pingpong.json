@@ -7,70 +7,102 @@
   "resources": [
     {
       "numbers": {
-        "framesPerSecond": 60,
+        "matchFieldWidth": "${viewport.width}",
+        "matchFieldHeight": "${viewport.height}",
         "paddleWidth": 10,
         "paddleHeight": 100,
         "ballRadius": 10,
+        "wallHeight": 4,
+        "netWidth": 4,
+        "netHeightOutter": 30,
+        "netHeightInner": 10,
+        "spacingToEdge": 25,
+        "playerPaddlePositionX": "@spacingToEdge",
+        "cpuPaddlePositionX": "${@matchFieldWidth - @paddleWidth - @spacingToEdge}",
+        "initialPlayerPaddlePositionY": "${(@matchFieldHeight - @paddleHeight) / 2}",
+        "initialCpuPaddlePositionY": "${(@matchFieldHeight - @paddleHeight) / 2}",
+        "initialCpuPaddleSpeed": 8,
         "initialBallVelocityX": 8,
         "initialBallVelocityY": 8,
         "initialBallSpeed": 10,
-        "initialBallPositionX": "${viewport.width / 2}",
-        "initialBallPositionY": "${viewport.height / 2}"
+        "initialBallPositionX": "${@matchFieldWidth / 2}",
+        "initialBallPositionY": "${@matchFieldHeight / 2}"
+      },
+      "strings": {
+        "ballDirectionLeft": "LEFT",
+        "ballDirectionRight": "RIGHT",
+        "initialBallDirection": "@ballDirectionRight"
       }
     }
   ],
   "styles": {},
-  "background": "#000000",
   "onMount": [],
   "graphics": {
-    "PingPong": {
+    "Pong": {
       "parameters": [
         "cpuScore",
         "playerScore",
         "ballPositionX",
         "ballPositionY",
-        "playerPaddlePositionX",
         "playerPaddlePositionY",
-        "cpuPaddlePositionX",
         "cpuPaddlePositionY"
       ],
       "type": "AVG",
-      "version": "1.1",
-      "width": "${viewport.width}",
-      "height": "${viewport.height}",
       "resources": [
         {
           "patterns": {
             "Net": {
-              "width": 2,
-              "height": 30,
+              "width": "@netWidth",
+              "height": "@netHeightOutter",
               "items": [
                 {
                   "type": "path",
-                  "fill": "#ffffff80",
-                  "pathData": "M0,0 L2,0 L2,10 L0,10 Z"
+                  "fill": "#ffffff",
+                  "pathData": "M0,0 L${@netWidth},0 L${@netWidth},${@netHeightInner} L0,${@netHeightInner} Z"
                 }
               ]
             }
           }
         }
       ],
+      "version": "1.1",
+      "width": "@matchFieldWidth",
+      "height": "@matchFieldHeight",
       "items": [
         {
           "type": "group",
-          "translateX": "${(viewport.width - 2) / 2}",
+          "description": "Net",
+          "translateX": "${(@matchFieldWidth / 2) - (@netWidth / 2)}",
           "items": [
             {
               "type": "path",
               "fill": "@Net",
-              "pathData": "M0,0 L2,0 L2,${viewport.height} L0,${viewport.height} Z"
+              "pathData": "M0,0 ${@netWidth},0 L${@netWidth},${@matchFieldHeight} L0,${@matchFieldHeight} Z"
+            }
+          ]
+        },
+        {
+          "description": "top Wall",
+          "type": "path",
+          "fill": "#ffffff",
+          "pathData": "M0,0 L${@matchFieldWidth},0 L${@matchFieldWidth},${@wallHeight} L0,${@wallHeight} Z"
+        },
+        {
+          "type": "group",
+          "description": "bottom Wall",
+          "translateY": "${@matchFieldHeight - @wallHeight}",
+          "items": [
+            {
+              "type": "path",
+              "fill": "#ffffff",
+              "pathData": "M0,0 L${@matchFieldWidth},0 L${@matchFieldWidth},${@wallHeight} L0,${@wallHeight} Z"
             }
           ]
         },
         {
           "type": "group",
-          "description": "User Paddle",
-          "translateX": "${playerPaddlePositionX}",
+          "description": "User paddle",
+          "translateX": "@playerPaddlePositionX",
           "translateY": "${playerPaddlePositionY}",
           "items": [
             {
@@ -82,8 +114,8 @@
         },
         {
           "type": "group",
-          "description": "Alexa Paddle",
-          "translateX": "${cpuPaddlePositionX}",
+          "description": "CPU paddle",
+          "translateX": "@cpuPaddlePositionX",
           "translateY": "${cpuPaddlePositionY}",
           "items": [
             {
@@ -109,145 +141,221 @@
         {
           "type": "text",
           "fill": "#ffffffd9",
-          "fontFamily": "amazon-ember, sans-serif",
+          "fontFamily": "amazon-ember",
           "fontSize": 100,
-          "fontWeight": "700",
+          "fontWeight": "900",
           "text": "${playerScore}",
-          "x": "${viewport.width / 4}",
-          "y": "${viewport.height / 5}",
+          "x": "${@matchFieldWidth / 4}",
+          "y": "${@matchFieldHeight / 5}",
           "textAnchor": "middle"
         },
         {
           "type": "text",
           "fill": "#ffffffd9",
-          "fontFamily": "amazon-ember, sans-serif",
+          "fontFamily": "amazon-ember",
           "fontSize": 100,
-          "fontWeight": "700",
+          "fontWeight": "900",
           "text": "${cpuScore}",
-          "x": "${3 * viewport.width / 4}",
-          "y": "${viewport.height / 5}",
+          "x": "${3 * @matchFieldWidth / 4}",
+          "y": "${@matchFieldHeight / 5}",
           "textAnchor": "middle"
         }
       ]
     }
   },
   "commands": {
-    "Noop": {
-      "parameters": [],
-      "commands": []
-    },
-    "ResetBallPosition": {
+    "ResetGame": {
       "parameters": [],
       "commands": [
         {
           "type": "SetValue",
           "property": "ballPositionX",
-          "value": "${@initialBallPositionX}"
+          "value": "@initialBallPositionX"
         },
         {
           "type": "SetValue",
           "property": "ballPositionY",
-          "value": "${@initialBallPositionY}"
-        },
-        {
-          "type": "SetValue",
-          "property": "ballVelocityX",
-          "value": "${@initialBallVelocityX}"
-        },
-        {
-          "type": "SetValue",
-          "property": "ballVelocityY",
-          "value": "${@initialBallVelocityY}"
+          "value": "@initialBallPositionY"
         },
         {
           "type": "SetValue",
           "property": "ballSpeed",
-          "value": "${@initialBallSpeed}"
+          "value": "@initialBallSpeed"
+        },
+        {
+          "type": "SetValue",
+          "property": "ballVelocityY",
+          "value": "@initialBallVelocityY"
+        }
+      ]
+    },
+    "CheckEndOfRound": {
+      "commands": [
+        {
+          "when": "${ballPositionX - @ballRadius < 0}",
+          "type": "Sequential",
+          "commands": [
+            {
+              "type": "ResetGame"
+            },
+            {
+              "type": "SetValue",
+              "property": "cpuScore",
+              "value": "${cpuScore + 1}"
+            }
+          ]
+        },
+        {
+          "when": "${(ballPositionX - @ballRadius) > @matchFieldWidth}",
+          "type": "Sequential",
+          "commands": [
+            {
+              "type": "ResetGame"
+            },
+            {
+              "type": "SetValue",
+              "property": "playerScore",
+              "value": "${playerScore + 1}"
+            },
+            {
+              "type": "SetValue",
+              "property": "cpuPaddleSpeed",
+              "value": "${cpuPaddleSpeed + 1}"
+            }
+          ]
         }
       ]
     },
     "CheckCollision": {
       "parameters": [
-        "paddlePositionX",
-        "paddlePositionY",
-        "ballPositionX",
-        "ballPositionY",
         {
-          "name": "paddleTop",
-          "default": "${paddlePositionY}"
+          "name": "paddlePositionX",
+          "default": "${ballDirection == @ballDirectionLeft ? (@playerPaddlePositionX + @paddleWidth) : (@cpuPaddlePositionX - @paddleWidth)}"
         },
         {
-          "name": "paddleBottom",
-          "default": "${paddlePositionY + @paddleHeight}"
+          "name": "paddlePositionY",
+          "default": "${ballDirection == @ballDirectionLeft ? playerPaddlePositionY : cpuPaddlePositionY}"
         },
         {
-          "name": "paddleLeft",
-          "default": "${paddlePositionX}"
+          "name": "isWithinX",
+          "default": "${(ballPositionX - @ballRadius) <= paddlePositionX && ballPositionX >= (paddlePositionX - @paddleWidth)}"
         },
         {
-          "name": "paddleRight",
-          "default": "${paddlePositionX + @paddleWidth}"
-        },
-        {
-          "name": "ballTop",
-          "default": "${ballPositionY - @ballRadius}"
-        },
-        {
-          "name": "ballBottom",
-          "default": "${ballPositionY + @ballRadius}"
-        },
-        {
-          "name": "ballLeft",
-          "default": "${ballPositionX - @ballRadius}"
-        },
-        {
-          "name": "ballRight",
-          "default": "${ballPositionX + @ballRadius}"
+          "name": "isWithinY",
+          "default": "${ballPositionY <= (paddlePositionY + @paddleHeight) && (ballPositionY + @ballRadius) >= paddlePositionY}"
         }
       ],
       "commands": [
         {
+          "when": "${isWithinX && isWithinY}",
+          "type": "Sequential",
+          "commands": [
+            {
+              "type": "SetValue",
+              "property": "ballPositionX",
+              "value": "${paddlePositionX}"
+            },
+            {
+              "type": "SetValue",
+              "property": "pointOfCollision",
+              "value": "${(ballPositionY - (paddlePositionY + @paddleHeight / 2)) / (@paddleHeight / 2)}"
+            },
+            {
+              "type": "SetValue",
+              "property": "ballVelocityX",
+              "value": "${((ballPositionX + @ballRadius < @matchFieldHeight / 2) ? 1 : -1) * ballSpeed * Math.cos((Math.PI / 4) * pointOfCollision)}"
+            },
+            {
+              "type": "SetValue",
+              "property": "ballVelocityY",
+              "value": "${ballSpeed * Math.sin((Math.PI / 4) * pointOfCollision)}"
+            },
+            {
+              "type": "SetValue",
+              "property": "ballSpeed",
+              "value": "${Math.clamp(0, ballSpeed + 1, 25)}"
+            },
+            {
+              "type": "SetValue",
+              "property": "ballDirection",
+              "value": "${ballDirection == @ballDirectionRight ? @ballDirectionLeft : @ballDirectionRight}"
+            }
+          ]
+        }
+      ]
+    },
+    "UpdateBallPosition": {
+      "commands": [
+        {
+          "type": "SetValue",
+          "property": "ballPositionX",
+          "value": "${ballPositionX + ballVelocityX}"
+        },
+        {
+          "type": "SetValue",
+          "property": "ballPositionY",
+          "value": "${ballPositionY + ballVelocityY}"
+        },
+        {
+          "when": "${ballPositionY - @ballRadius < @wallHeight || ballPositionY + @ballRadius > (@matchFieldHeight - @wallHeight)}",
+          "description": "ball hits the wall",
+          "type": "SetValue",
+          "property": "ballVelocityY",
+          "value": "${ballVelocityY * -1}"
+        }
+      ]
+    },
+    "UpdateCpuPaddlePosition": {
+      "commands": [
+        {
+          "when": "${cpuPaddlePositionY > (ballPositionY - (@paddleHeight / 2))}",
           "type": "Select",
           "commands": [
             {
-              "when": "${paddleLeft <= ballRight && paddleTop < ballBottom && paddleRight >= ballLeft && paddleBottom > ballTop}",
-              "type": "Sequential",
-              "commands": [
-                {
-                  "type": "SetValue",
-                  "property": "collided",
-                  "value": true
-                },
-                {
-                  "type": "SetValue",
-                  "property": "pointOfCollision",
-                  "value": "${(ballPositionY - (paddlePositionY + @paddleHeight / 2)) / (@paddleHeight / 2)}"
-                },
-                {
-                  "type": "SetValue",
-                  "property": "ballVelocityX",
-                  "value": "${((ballPositionX + @ballRadius < viewport.width / 2) ? 1 : -1) * ballSpeed * Math.cos((Math.PI / 4) * pointOfCollision)}"
-                },
-                {
-                  "type": "SetValue",
-                  "property": "ballVelocityY",
-                  "value": "${ballSpeed * Math.sin((Math.PI / 4) * pointOfCollision)}"
-                },
-                {
-                  "type": "SetValue",
-                  "property": "ballSpeed",
-                  "value": "${ballSpeed + 1}"
-                }
-              ]
+              "when": "${ballDirection == @ballDirectionRight}",
+              "type": "SetValue",
+              "property": "cpuPaddlePositionY",
+              "value": "${cpuPaddlePositionY - (cpuPaddleSpeed / 1.5)}"
             }
           ],
           "otherwise": [
             {
               "type": "SetValue",
-              "property": "collided",
-              "value": false
+              "property": "cpuPaddlePositionY",
+              "value": "${cpuPaddlePositionY - (cpuPaddleSpeed / 4)}"
             }
           ]
+        },
+        {
+          "when": "${cpuPaddlePositionY < (ballPositionY - (@paddleHeight / 2))}",
+          "type": "Select",
+          "commands": [
+            {
+              "when": "${ballDirection == @ballDirectionRight}",
+              "type": "SetValue",
+              "property": "cpuPaddlePositionY",
+              "value": "${cpuPaddlePositionY + (cpuPaddleSpeed / 1.5)}"
+            }
+          ],
+          "otherwise": [
+            {
+              "type": "SetValue",
+              "property": "cpuPaddlePositionY",
+              "value": "${cpuPaddlePositionY + (cpuPaddleSpeed / 4)}"
+            }
+          ]
+        },
+        {
+          "when": "${(cpuPaddlePositionY + @paddleHeight) > (@matchFieldHeight - @wallHeight)}",
+          "type": "SetValue",
+          "property": "cpuPaddlePositionY",
+          "value": "${@matchFieldHeight - @wallHeight - @paddleHeight}"
+        },
+        {
+          "when": "${cpuPaddlePositionY < @wallHeight}",
+          "type": "SetValue",
+          "property": "cpuPaddlePositionY",
+          "value": "@wallHeight"
         }
       ]
     }
@@ -259,184 +367,112 @@
     ],
     "items": [
       {
-        "type": "Container",
-        "width": "100vw",
-        "height": "100vh",
-        "items": [
+        "type": "VectorGraphic",
+        "source": "Pong",
+        "width": "@matchFieldWidth",
+        "height": "@matchFieldHeight",
+        "bind": [
           {
-            "type": "VectorGraphic",
-            "source": "PingPong",
-            "width": "100vw",
-            "height": "100vh",
-            "onDown": [
+            "name": "cpuScore",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "playerScore",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "pointOfCollision",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "ballVelocityX",
+            "type": "number",
+            "value": "@initialBallVelocityX"
+          },
+          {
+            "name": "ballVelocityY",
+            "type": "number",
+            "value": "@initialBallVelocityY"
+          },
+          {
+            "name": "ballSpeed",
+            "type": "number",
+            "value": "@initialBallSpeed"
+          },
+          {
+            "name": "ballPositionX",
+            "type": "number",
+            "value": "@initialBallPositionX"
+          },
+          {
+            "name": "ballPositionY",
+            "type": "number",
+            "value": "@initialBallPositionY"
+          },
+          {
+            "name": "playerPaddlePositionY",
+            "type": "number",
+            "value": "@initialPlayerPaddlePositionY"
+          },
+          {
+            "name": "cpuPaddlePositionY",
+            "type": "number",
+            "value": "@initialCpuPaddlePositionY"
+          },
+          {
+            "name": "ballDirection",
+            "type": "string",
+            "value": "@initialBallDirection"
+          },
+          {
+            "name": "cpuPaddleSpeed",
+            "type": "number",
+            "value": "@initialCpuPaddleSpeed"
+          }
+        ],
+        "onDown": [
+          {
+            "type": "Idle"
+          }
+        ],
+        "onUp": [
+          {
+            "type": "Idle"
+          }
+        ],
+        "onMove": [
+          {
+            "type": "SetValue",
+            "property": "playerPaddlePositionY",
+            "value": "${Math.clamp(@wallHeight, event.component.y - @paddleHeight, @matchFieldHeight - @wallHeight)}"
+          }
+        ],
+        "ballPositionX": "${ballPositionX}",
+        "ballPositionY": "${ballPositionY}",
+        "cpuScore": "${cpuScore}",
+        "playerScore": "${playerScore}",
+        "cpuPaddlePositionY": "${cpuPaddlePositionY}",
+        "playerPaddlePositionY": "${playerPaddlePositionY}",
+        "handleTick": [
+          {
+            "minimumDelay": "${1000 / 60}",
+            "commands": [
               {
-                "type": "Noop"
+                "type": "CheckCollision"
+              },
+              {
+                "type": "CheckEndOfRound"
+              },
+              {
+                "type": "UpdateBallPosition"
+              },
+              {
+                "type": "UpdateCpuPaddlePosition"
               }
-            ],
-            "onUp": [
-              {
-                "type": "Noop"
-              }
-            ],
-            "onMove": [
-              {
-                "type": "SetValue",
-                "property": "playerPaddlePositionY",
-                "value": "${Math.clamp(0, event.component.y - @paddleHeight, viewport.height)}"
-              }
-            ],
-            "handleTick": [
-              {
-                "minimumDelay": "${1000 / @framesPerSecond}",
-                "commands": [
-                  {
-                    "when": "${(ballPositionX + @ballRadius < viewport.width / 2)}",
-                    "description": "ball collided with player",
-                    "type": "CheckCollision",
-                    "paddlePositionY": "${playerPaddlePositionY}",
-                    "paddlePositionX": "${playerPaddlePositionX}",
-                    "ballPositionX": "${ballPositionX}",
-                    "ballPositionY": "${ballPositionY}"
-                  },
-                  {
-                    "when": "${(ballPositionX + @ballRadius > viewport.width / 2)}",
-                    "type": "CheckCollision",
-                    "paddlePositionY": "${cpuPaddlePositionY}",
-                    "paddlePositionX": "${cpuPaddlePositionX}",
-                    "ballPositionX": "${ballPositionX}",
-                    "ballPositionY": "${ballPositionY}"
-                  },
-                  {
-                    "when": "${!collided && ballPositionX - @ballRadius < 0}",
-                    "type": "Sequential",
-                    "description": "cpu wins",
-                    "commands": [
-                      {
-                        "type": "ResetBallPosition"
-                      },
-                      {
-                        "type": "SetValue",
-                        "property": "cpuScore",
-                        "value": "${cpuScore + 1}"
-                      }
-                    ]
-                  },
-                  {
-                    "when": "${!collided && ballPositionX + @ballRadius > viewport.width}",
-                    "type": "Sequential",
-                    "description": "player wins",
-                    "commands": [
-                      {
-                        "type": "ResetBallPosition"
-                      },
-                      {
-                        "type": "SetValue",
-                        "property": "playerScore",
-                        "value": "${playerScore + 1}"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "SetValue",
-                    "property": "ballPositionX",
-                    "value": "${ballPositionX + ballVelocityX}"
-                  },
-                  {
-                    "type": "SetValue",
-                    "property": "ballPositionY",
-                    "value": "${ballPositionY + ballVelocityY}"
-                  },
-                  {
-                    "when": "${ballPositionX >= viewport.width / 4}",
-                    "type": "SetValue",
-                    "property": "cpuPaddlePositionY",
-                    "value": "${cpuPaddlePositionY + ((ballPositionY - (cpuPaddlePositionY + @paddleHeight / 2))) * (Math.random() * (0.15 - 0.1) + 0.1)}"
-                  },
-                  {
-                    "when": "${ballPositionY - @ballRadius < 0 || ballPositionY + @ballRadius > viewport.height}",
-                    "description": "ball hits the wall",
-                    "type": "SetValue",
-                    "property": "ballVelocityY",
-                    "value": "${ballVelocityY * -1}"
-                  }
-                ]
-              }
-            ],
-            "bind": [
-              {
-                "name": "cpuScore",
-                "type": "number",
-                "value": "0"
-              },
-              {
-                "name": "playerScore",
-                "type": "number",
-                "value": "0"
-              },
-              {
-                "name": "collided",
-                "type": "boolean",
-                "value": false
-              },
-              {
-                "name": "pointOfCollision",
-                "type": "number",
-                "value": "0"
-              },
-              {
-                "name": "ballVelocityX",
-                "type": "number",
-                "value": "@initialBallVelocityX"
-              },
-              {
-                "name": "ballVelocityY",
-                "type": "number",
-                "value": "@initialBallVelocityY"
-              },
-              {
-                "name": "ballSpeed",
-                "type": "number",
-                "value": "@initialBallSpeed"
-              },
-              {
-                "name": "ballPositionX",
-                "type": "number",
-                "value": "${@initialBallPositionX}"
-              },
-              {
-                "name": "ballPositionY",
-                "type": "number",
-                "value": "${@initialBallPositionY}"
-              },
-              {
-                "name": "playerPaddlePositionX",
-                "type": "number",
-                "value": "0"
-              },
-              {
-                "name": "playerPaddlePositionY",
-                "type": "number",
-                "value": "${(viewport.height - @paddleHeight) / 2}"
-              },
-              {
-                "name": "cpuPaddlePositionX",
-                "type": "number",
-                "value": "${viewport.width - @paddleWidth}"
-              },
-              {
-                "name": "cpuPaddlePositionY",
-                "type": "number",
-                "value": "${(viewport.height - @paddleHeight) / 2}"
-              }
-            ],
-            "ballPositionX": "${ballPositionX}",
-            "ballPositionY": "${ballPositionY}",
-            "cpuScore": "${cpuScore}",
-            "playerScore": "${playerScore}",
-            "cpuPaddlePositionX": "${cpuPaddlePositionX}",
-            "cpuPaddlePositionY": "${cpuPaddlePositionY}",
-            "playerPaddlePositionX": "${playerPaddlePositionX}",
-            "playerPaddlePositionY": "${playerPaddlePositionY}"
+            ]
           }
         ]
       }
