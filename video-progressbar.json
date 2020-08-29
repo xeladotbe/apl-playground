@@ -1,0 +1,162 @@
+{
+  "type": "APL",
+  "version": "1.4",
+  "import": [
+    {
+      "name": "alexa-styles",
+      "version": "1.1.0"
+    },
+    {
+      "name": "alexa-layouts",
+      "version": "1.2.0"
+    }
+  ],
+  "layouts": {
+    "FormattedDuration": {
+      "parameters": [
+        {
+          "name": "seconds",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "default": "${seconds >= 3600 ? 'HH:mm:ss' : 'mm:ss'}"
+        }
+      ],
+      "item": {
+        "type": "Text",
+        "fontSize": "${@fontSizeXSmall}",
+        "text": "${Time.format(format, seconds)}"
+      }
+    }
+  },
+  "mainTemplate": {
+    "parameters": [
+      "payload"
+    ],
+    "items": [
+      {
+        "type": "Container",
+        "height": "100vh",
+        "width": "100vw",
+        "alignitems": "center",
+        "bind": [
+          {
+            "name": "progressValue",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "totalValue",
+            "type": "number",
+            "value": "0"
+          }
+        ],
+        "paddingTop": "@spacingSmall",
+        "items": [
+          {
+            "type": "Video",
+            "height": "100%",
+            "width": "100%",
+            "shrink": 1,
+            "autoplay": false,
+            "audioTrack": "foreground",
+            "id": "videoPlayerId",
+            "source": {
+              "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            },
+            "onTrackUpdate": [
+              {
+                "type": "SetValue",
+                "property": "progressValue",
+                "value": "0"
+              },
+              {
+                "type": "SetValue",
+                "property": "totalValue",
+                "value": "${event.duration}"
+              }
+            ],
+            "onTimeUpdate": [
+              {
+                "type": "SetValue",
+                "property": "progressValue",
+                "value": "${event.currentTime}"
+              },
+              {
+                "type": "SetValue",
+                "property": "totalValue",
+                "value": "${event.duration}"
+              }
+            ],
+            "onPause": [
+              {
+                "type": "SetValue",
+                "componentId": "alexaPlayPauseToggleButton",
+                "property": "checked",
+                "value": true
+              }
+            ],
+            "onPlay": [
+              {
+                "type": "SetValue",
+                "componentId": "alexaPlayPauseToggleButton",
+                "property": "checked",
+                "value": false
+              },
+              {
+                "type": "SetValue",
+                "property": "totalValue",
+                "value": "${event.duration}"
+              }
+            ]
+          },
+          {
+            "type": "Container",
+            "alignSelf": "center",
+            "paddingTop": "@spacingSmall",
+            "alignItems": "center",
+            "width": "90%",
+            "items": [
+              {
+                "type": "AlexaProgressBar",
+                "position": "relative",
+                "progressValue": "${progressValue}",
+                "totalValue": "${totalValue}",
+                "width": " 100%",
+                "spacing": "@spacingLarge"
+              },
+              {
+                "paddingTop": "@spacingXSmall",
+                "type": "Container",
+                "width": "100%",
+                "justifyContent": "spaceBetween",
+                "direction": "row",
+                "items": [
+                  {
+                    "type": "FormattedDuration",
+                    "seconds": "${progressValue}"
+                  },
+                  {
+                    "type": "FormattedDuration",
+                    "seconds": "${totalValue}"
+                  }
+                ]
+              },
+              {
+                "type": "AlexaTransportControls",
+                "primaryControlSize": 75,
+                "secondaryControls": "skip",
+                "mediaComponentId": "videoPlayerId",
+                "playPauseToggleButtonId": "playPauseToggleButtonId",
+                "autoplay": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
