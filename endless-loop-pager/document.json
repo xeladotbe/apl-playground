@@ -1,0 +1,600 @@
+{
+  "document": {
+    "type": "APL",
+    "version": "1.4",
+    "settings": {},
+    "theme": "dark",
+    "import": [],
+    "resources": [],
+    "styles": {},
+    "onMount": [],
+    "graphics": {},
+    "commands": {
+      "bounceOutDown": {
+        "parameters": [
+          "componentId",
+          "duration",
+          "distance",
+          "delay"
+        ],
+        "commands": [
+          {
+            "type": "AnimateItem",
+            "componentId": "${componentId || 'SELF'}",
+            "delay": "${delay || 0}",
+            "duration": "${duration * 0.2}",
+            "value": [
+              {
+                "property": "transform",
+                "from": [
+                  {
+                    "translateY": "0"
+                  }
+                ],
+                "to": [
+                  {
+                    "translateY": "10px"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "AnimateItem",
+            "componentId": "${componentId || 'SELF'}",
+            "duration": "${duration * 0.2}",
+            "value": [
+              {
+                "property": "transform",
+                "from": [
+                  {
+                    "translateY": "10px"
+                  }
+                ],
+                "to": [
+                  {
+                    "translateY": "-20px"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "Idle",
+            "delay": "${duration * 0.05}"
+          },
+          {
+            "type": "AnimateItem",
+            "componentId": "${componentId || 'SELF'}",
+            "duration": "${duration * 0.55}",
+            "value": [
+              {
+                "property": "opacity",
+                "to": 0
+              },
+              {
+                "property": "transform",
+                "from": [
+                  {
+                    "translateY": "-20px"
+                  }
+                ],
+                "to": [
+                  {
+                    "translateY": "${distance || '200vh'}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "bounceInDown": {
+        "parameters": [
+          "componentId",
+          "duration",
+          "distance",
+          "delay"
+        ],
+        "commands": [
+          {
+            "type": "Sequential",
+            "commands": [
+              {
+                "type": "AnimateItem",
+                "componentId": "${componentId || 'SELF'}",
+                "delay": "${delay || 0}",
+                "duration": "${duration * 0.6}",
+                "easing": "cubic-bezier(0.215, 0.61, 0.355, 1)",
+                "value": [
+                  {
+                    "property": "opacity",
+                    "from": 0,
+                    "to": 1
+                  },
+                  {
+                    "property": "transform",
+                    "from": [
+                      {
+                        "translateY": "${distance && ('-' + distance) || '-200vh'}"
+                      }
+                    ],
+                    "to": [
+                      {
+                        "translateY": "25px"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "AnimateItem",
+                "componentId": "${componentId || 'SELF'}",
+                "duration": "${duration * 0.15}",
+                "easing": "cubic-bezier(0.215, 0.61, 0.355, 1)",
+                "value": [
+                  {
+                    "property": "transform",
+                    "from": [
+                      {
+                        "translateY": "25px"
+                      }
+                    ],
+                    "to": [
+                      {
+                        "translateY": "-10px"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "AnimateItem",
+                "componentId": "${componentId || 'SELF'}",
+                "duration": "${duration * 0.15}",
+                "easing": "cubic-bezier(0.215, 0.61, 0.355, 1)",
+                "value": [
+                  {
+                    "property": "transform",
+                    "from": [
+                      {
+                        "translateY": "-10px"
+                      }
+                    ],
+                    "to": [
+                      {
+                        "translateY": "5px"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "AnimateItem",
+                "componentId": "${componentId || 'SELF'}",
+                "duration": "${duration * 0.1}",
+                "easing": "cubic-bezier(0.215, 0.61, 0.355, 1)",
+                "value": [
+                  {
+                    "property": "transform",
+                    "from": [
+                      {
+                        "translateY": "5px"
+                      }
+                    ],
+                    "to": [
+                      {
+                        "translateY": "0"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "fadeIn": {
+        "parameters": [
+          "componentId",
+          "duration",
+          "delay"
+        ],
+        "commands": [
+          {
+            "type": "AnimateItem",
+            "componentId": "${componentId || 'SELF'}",
+            "duration": "${duration}",
+            "delay": "${delay || 0}",
+            "value": [
+              {
+                "property": "opacity",
+                "from": 0,
+                "to": 1
+              }
+            ]
+          }
+        ]
+      },
+      "fadeOut": {
+        "parameters": [
+          "componentId",
+          "duration",
+          "delay"
+        ],
+        "commands": [
+          {
+            "type": "AnimateItem",
+            "componentId": "${componentId || 'SELF'}",
+            "duration": "${duration}",
+            "delay": "${delay || 0}",
+            "value": [
+              {
+                "property": "opacity",
+                "from": 1,
+                "to": 0
+              }
+            ]
+          }
+        ]
+      },
+      "NextPage": {
+        "commands": [
+          {
+            "when": "${pagerItems[page].pageWillDisappear}",
+            "type": "Sequential",
+            "sequencer": "auto",
+            "commands": [
+              "${pagerItems[page].pageWillDisappear}"
+            ]
+          },
+          {
+            "when": "${page < pages}",
+            "type": "SetPage",
+            "sequencer": "auto",
+            "position": "relative",
+            "value": 1
+          },
+          {
+            "when": "${page == pages - 1}",
+            "type": "SetPage",
+            "sequencer": "auto",
+            "position": "absolute",
+            "value": 0
+          }
+        ]
+      }
+    },
+    "layouts": {},
+    "mainTemplate": {
+      "parameters": [
+        "payload"
+      ],
+      "items": [
+        {
+          "type": "Container",
+          "width": "100vw",
+          "height": "100vh",
+          "paddingTop": "32dp",
+          "paddingRight": "32dp",
+          "paddingBottom": "32dp",
+          "paddingLeft": "32dp",
+          "items": [
+            {
+              "type": "Pager",
+              "navigation": "none",
+              "width": "100%",
+              "height": "100%",
+              "grow": 0,
+              "shrink": 1,
+              "bind": [
+                {
+                  "name": "pagerItems",
+                  "value": "${payload.currentView.properties.pagerItems}"
+                },
+                {
+                  "name": "page",
+                  "type": "number",
+                  "value": 0
+                },
+                {
+                  "name": "pages",
+                  "type": "number",
+                  "value": "${pagerItems.length}"
+                }
+              ],
+              "onPageChanged": [
+                {
+                  "type": "SetValue",
+                  "componentId": "pageIndicator",
+                  "property": "page",
+                  "value": "${event.source.value}"
+                },
+                {
+                  "type": "SetValue",
+                  "property": "page",
+                  "value": "${event.source.value}"
+                },
+                {
+                  "when": "${pagerItems[page].pageDidAppear}",
+                  "type": "Sequential",
+                  "sequencer": "auto",
+                  "commands": [
+                    "${pagerItems[page].pageDidAppear}"
+                  ]
+                }
+              ],
+              "onMount": [
+                {
+                  "type": "SetValue",
+                  "componentId": "pageIndicator",
+                  "property": "page",
+                  "value": "${page}"
+                },
+                {
+                  "type": "SetValue",
+                  "componentId": "pageIndicator",
+                  "property": "pages",
+                  "value": "${pages}"
+                },
+                {
+                  "type": "Sequential",
+                  "sequencer": "auto",
+                  "commands": [
+                    "${pagerItems[page].pageDidAppear}"
+                  ]
+                }
+              ],
+              "data": "${pagerItems}",
+              "items": [
+                {
+                  "bind": [
+                    {
+                      "name": "i",
+                      "value": "${index}"
+                    }
+                  ],
+                  "type": "Frame",
+                  "width": "100%",
+                  "height": "100%",
+                  "id": "pageFrame${i}",
+                  "item": {
+                    "type": "Container",
+                    "width": "100%",
+                    "height": "100%",
+                    "items": [
+                      {
+                        "type": "Text",
+                        "id": "headline${i}",
+                        "fontWeight": "700",
+                        "fontSize": "64dp",
+                        "text": "${data.content.headline}"
+                      },
+                      {
+                        "type": "Container",
+                        "opacity": 0,
+                        "id": "paragraphs${i}",
+                        "data": "${data.content.paragraphs}",
+                        "items": [
+                          {
+                            "type": "Text",
+                            "paddingTop": "${index > 0 ? '16dp' : '0'}",
+                            "text": "${data.value}"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "Text",
+              "id": "pageIndicator",
+              "textAlign": "center",
+              "bind": [
+                {
+                  "name": "page",
+                  "type": "number",
+                  "value": 0
+                },
+                {
+                  "name": "pages",
+                  "type": "number",
+                  "value": 0
+                }
+              ],
+              "text": "${page + 1} | ${pages}"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "datasources": {
+    "currentView": {
+      "type": "object",
+      "properties": {
+        "pagerItems": [
+          {
+            "content": {
+              "headline": "Page 1",
+              "paragraphs": [
+                {
+                  "value": "Paragraph 1"
+                },
+                {
+                  "value": "Paragraph 2"
+                }
+              ]
+            },
+            "pageWillDisappear": [
+              {
+                "type": "bounceOutDown",
+                "duration": 700,
+                "componentId": "headline0"
+              },
+              {
+                "type": "fadeOut",
+                "duration": 500,
+                "componentId": "paragraphs0"
+              }
+            ],
+            "pageDidAppear": [
+              {
+                "type": "bounceInDown",
+                "duration": 700,
+                "componentId": "headline0"
+              },
+              {
+                "type": "fadeIn",
+                "duration": 500,
+                "componentId": "paragraphs0"
+              },
+              {
+                "type": "Idle",
+                "delay": 2500
+              },
+              {
+                "type": "NextPage"
+              }
+            ]
+          },
+          {
+            "content": {
+              "headline": "Page 2",
+              "paragraphs": [
+                {
+                  "value": "Paragraph 1"
+                },
+                {
+                  "value": "Paragraph 2"
+                }
+              ]
+            },
+            "pageWillDisappear": [
+              {
+                "type": "bounceOutDown",
+                "duration": 700,
+                "componentId": "headline1"
+              },
+              {
+                "type": "fadeOut",
+                "duration": 500,
+                "componentId": "paragraphs1"
+              }
+            ],
+            "pageDidAppear": [
+              {
+                "type": "bounceInDown",
+                "duration": 700,
+                "componentId": "headline1"
+              },
+              {
+                "type": "fadeIn",
+                "duration": 500,
+                "componentId": "paragraphs1"
+              },
+              {
+                "type": "Idle",
+                "delay": 2500
+              },
+              {
+                "type": "NextPage"
+              }
+            ]
+          },
+          {
+            "content": {
+              "headline": "Page 3",
+              "paragraphs": [
+                {
+                  "value": "Paragraph 1"
+                },
+                {
+                  "value": "Paragraph 2"
+                }
+              ]
+            },
+            "pageWillDisappear": [
+              {
+                "type": "bounceOutDown",
+                "duration": 700,
+                "componentId": "headline2"
+              },
+              {
+                "type": "fadeOut",
+                "duration": 500,
+                "componentId": "paragraphs2"
+              }
+            ],
+            "pageDidAppear": [
+              {
+                "type": "bounceInDown",
+                "duration": 700,
+                "componentId": "headline2"
+              },
+              {
+                "type": "fadeIn",
+                "duration": 500,
+                "componentId": "paragraphs2"
+              },
+              {
+                "type": "Idle",
+                "delay": 2500
+              },
+              {
+                "type": "NextPage"
+              }
+            ]
+          },
+          {
+            "content": {
+              "headline": "Page 4",
+              "paragraphs": [
+                {
+                  "value": "Paragraph 1"
+                },
+                {
+                  "value": "Paragraph 2"
+                }
+              ]
+            },
+            "pageWillDisappear": [
+              {
+                "type": "bounceOutDown",
+                "duration": 700,
+                "componentId": "headline3"
+              },
+              {
+                "type": "fadeOut",
+                "duration": 500,
+                "componentId": "paragraphs3"
+              }
+            ],
+            "pageDidAppear": [
+              {
+                "type": "bounceInDown",
+                "duration": 700,
+                "componentId": "headline3"
+              },
+              {
+                "type": "fadeIn",
+                "duration": 500,
+                "componentId": "paragraphs3"
+              },
+              {
+                "type": "Idle",
+                "delay": 2500
+              },
+              {
+                "type": "NextPage"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "sources": {}
+}
