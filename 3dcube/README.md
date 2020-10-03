@@ -4,7 +4,7 @@ Using the new [smart motion extension](https://developer.amazon.com/en-US/docs/a
 
 ![Preview](cube.gif)
 
-## How to use
+## How can I test it myself?
 
 * [Enable the smart-motion extension](https://developer.amazon.com/en-US/docs/alexa/alexa-presentation-language/apl-ext-smart-motion.html#enable-the-smart-motion-extension)
 
