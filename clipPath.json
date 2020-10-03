@@ -1,0 +1,66 @@
+{
+    "document": {
+        "type": "APL",
+        "version": "1.4",
+        "settings": {},
+        "theme": "dark",
+        "import": [],
+        "resources": [],
+        "styles": {},
+        "onMount": [],
+        "graphics": {
+            "Overlay": {
+                "type": "AVG",
+                "version": "1.1",
+                "width": "${viewport.width}",
+                "height": "${viewport.height}",
+                "items": [
+                    {
+                        "type": "group",
+                        "clipPath": "M 0 ${viewport.height},${viewport.width} ${viewport.height},${viewport.width} 0,${viewport.width * .75} ${viewport.height * .75},0 8z",
+                        "items": [
+                            {
+                                "type": "path",
+                                "fill": "#000",
+                                "pathData": "M0,0 ${viewport.width},0 L${viewport.width},${viewport.height} L0,${viewport.height} Z"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "commands": {},
+        "layouts": {},
+        "mainTemplate": {
+            "parameters": [
+                "payload"
+            ],
+            "items": [
+                {
+                    "type": "Container",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "source": "https://placeimg.com/${viewport.width}/${viewport.height}/any?t=${(Math.floor(Time.seconds(localTime) / 5) * 5) % 60}",
+                            "width": "100%",
+                            "height": "100%",
+                            "scale": "best-fit",
+                            "position": "absolute"
+                        },
+                        {
+                            "type": "VectorGraphic",
+                            "source": "Overlay",
+                            "width": "100%",
+                            "height": "100%",
+                            "scale": "none"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "datasources": {},
+    "sources": {}
+}
