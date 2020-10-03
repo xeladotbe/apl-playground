@@ -1,10 +1,14 @@
 # An infinite loop Pager component with Lifecycle Events!
 
+![Preview](preview.gif)
+
 This is an example of a pager that enables a series of commands to be executed when entering (pageDidAppear) or leaving (pageWillDisappear) a page.
 
 ## How does it work?
 
 First, various properties are bound to the pager, the pages from our data sources, the current page and the number of pages in the pager. Furthermore 2 APL event handlers "onMount" and "onPageChanged". In the onMount handler the commands defined in the datasource for the current page are executed.
+
+> It is very important to add a sequencer to prevent our commands from being executed in fast mode.
 
 ```
 "onMount": [
