@@ -79,8 +79,8 @@
       ],
       "type": "AVG",
       "version": "1.1",
-      "height": "${viewport.width}",
-      "width": "${viewport.height}",
+      "height": "${viewport.height}",
+      "width": "${viewport.width}",
       "styles": {
         "face": {
           "values": [
