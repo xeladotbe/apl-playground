@@ -1,0 +1,943 @@
+{
+  "description": "Cube is based on the tutorial from https://www.youtube.com/watch?v=OVQxTNd2U3w",
+  "type": "APL",
+  "version": "1.4",
+  "settings": {
+    "idleTimeout": 300000,
+    "SmartMotion": {
+      "deviceStateName": "DeviceState"
+    }
+  },
+  "extensions": [
+    {
+      "name": "SmartMotion",
+      "uri": "alexaext:smartmotion:10"
+    }
+  ],
+  "theme": "dark",
+  "import": [],
+  "resources": [
+    {
+      "numbers": {
+        "FOCAL_LENGTH": 200,
+        "CUBE_X": 0,
+        "CUBE_Y": 0,
+        "CUBE_Z": 300,
+        "CUBE_SIZE": "${@FOCAL_LENGTH * .5}",
+        "FRAMES_PER_SECOND": "${1000 / 30}",
+        "RADIAN_PER_FRAME": "${2 * Math.PI / 180}"
+      }
+    }
+  ],
+  "styles": {},
+  "onMount": [],
+  "graphics": {
+    "Cube": {
+      "parameters": [
+        "cubeRadian",
+        "deviceRadian",
+        "vertex12DX",
+        "vertex12DY",
+        "vertex22DX",
+        "vertex22DY",
+        "vertex32DX",
+        "vertex32DY",
+        "vertex42DX",
+        "vertex42DY",
+        "vertex52DX",
+        "vertex52DY",
+        "vertex62DX",
+        "vertex62DY",
+        "vertex72DX",
+        "vertex72DY",
+        "vertex82DX",
+        "vertex82DY",
+        "vertex13DX",
+        "vertex13DY",
+        "vertex13DZ",
+        "vertex23DX",
+        "vertex23DY",
+        "vertex23DZ",
+        "vertex33DX",
+        "vertex33DY",
+        "vertex33DZ",
+        "vertex43DX",
+        "vertex43DY",
+        "vertex43DZ",
+        "vertex53DX",
+        "vertex53DY",
+        "vertex53DZ",
+        "vertex63DX",
+        "vertex63DY",
+        "vertex63DZ",
+        "vertex73DX",
+        "vertex73DY",
+        "vertex73DZ",
+        "vertex83DX",
+        "vertex83DY",
+        "vertex83DZ"
+      ],
+      "type": "AVG",
+      "version": "1.1",
+      "height": "${viewport.width}",
+      "width": "${viewport.height}",
+      "styles": {
+        "face": {
+          "values": [
+            {
+              "stroke": "#ffffff",
+              "strokeWidth": 1,
+              "fill": "#5fcaf4"
+            }
+          ]
+        }
+      },
+      "description": "check out https://www.math-only-math.com/three-dimensional-figures.html 'Faces of a Cube' to see a description of the faces for a cube.",
+      "items": [
+        {
+          "type": "text",
+          "fill": "#ffffff",
+          "text": "${cubeRadian}/${deviceRadian}",
+          "x": 50,
+          "y": 100
+        },
+        {
+          "description": "group of face: DCGH",
+          "type": "group",
+          "opacity": "${(-vertex53DX * (((vertex83DY - vertex53DY) * (vertex73DZ - vertex53DZ)) - ((vertex83DZ - vertex53DZ) * (vertex73DY - vertex53DY)))) + (-vertex53DY * (((vertex83DZ - vertex53DZ) * (vertex73DX - vertex53DX)) - ((vertex83DX - vertex53DX) * (vertex73DZ - vertex53DZ)))) + (-vertex53DZ * (((vertex83DX - vertex53DX) * (vertex73DY - vertex53DY)) - ((vertex83DY - vertex53DY) * (vertex73DX - vertex53DX)))) <= 0 ? 1 : 0}",
+          "items": [
+            {
+              "description": "face: DCGH",
+              "type": "path",
+              "style": "face",
+              "pathData": "M ${vertex52DX} ${vertex52DY} L ${vertex82DX} ${vertex82DY} L ${vertex72DX} ${vertex72DY} L ${vertex62DX} ${vertex62DY} z"
+            }
+          ]
+        },
+        {
+          "description": "group of face: ADHE",
+          "type": "group",
+          "opacity": "${(-vertex13DX * (((vertex43DY - vertex13DY) * (vertex83DZ - vertex13DZ)) - ((vertex43DZ - vertex13DZ) * (vertex83DY - vertex13DY)))) + (-vertex13DY * (((vertex43DZ - vertex13DZ) * (vertex83DX - vertex13DX)) - ((vertex43DX - vertex13DX) * (vertex83DZ - vertex13DZ)))) + (-vertex13DZ * (((vertex43DX - vertex13DX) * (vertex83DY - vertex13DY)) - ((vertex43DY - vertex13DY) * (vertex83DX - vertex13DX)))) <= 0 ? 1 : 0}",
+          "items": [
+            {
+              "description": "face: ADHE",
+              "type": "path",
+              "style": "face",
+              "pathData": "M ${vertex12DX} ${vertex12DY} L ${vertex42DX} ${vertex42DY} L ${vertex82DX} ${vertex82DY} L ${vertex52DX} ${vertex52DY} z"
+            }
+          ]
+        },
+        {
+          "description": "group of face: ABCD",
+          "type": "group",
+          "opacity": "${(-vertex43DX * (((vertex33DY - vertex43DY) * (vertex73DZ - vertex43DZ)) - ((vertex33DZ - vertex43DZ) * (vertex73DY - vertex43DY)))) + (-vertex43DY * (((vertex33DZ - vertex43DZ) * (vertex73DX - vertex43DX)) - ((vertex33DX - vertex43DX) * (vertex73DZ - vertex43DZ)))) + (-vertex43DZ * (((vertex33DX - vertex43DX) * (vertex73DY - vertex43DY)) - ((vertex33DY - vertex43DY) * (vertex73DX - vertex43DX)))) <= 0 ? 1 : 0}",
+          "items": [
+            {
+              "description": "face: ABCD",
+              "type": "path",
+              "style": "face",
+              "pathData": "M ${vertex42DX} ${vertex42DY} L ${vertex32DX} ${vertex32DY} L ${vertex72DX} ${vertex72DY} L ${vertex82DX} ${vertex82DY} z"
+            }
+          ]
+        },
+        {
+          "description": "group of face: BCGF",
+          "type": "group",
+          "opacity": "${(-vertex23DX * (((vertex63DY - vertex23DY) * (vertex73DZ - vertex23DZ)) - ((vertex63DZ - vertex23DZ) * (vertex73DY - vertex23DY)))) + (-vertex23DY * (((vertex63DZ - vertex23DZ) * (vertex73DX - vertex23DX)) - ((vertex63DX - vertex23DX) * (vertex73DZ - vertex23DZ)))) + (-vertex23DZ * (((vertex63DX - vertex23DX) * (vertex73DY - vertex23DY)) - ((vertex63DY - vertex23DY) * (vertex73DX - vertex23DX)))) <= 0 ? 1 : 0}",
+          "items": [
+            {
+              "description": "face: BCGF",
+              "type": "path",
+              "style": "face",
+              "pathData": "M ${vertex22DX} ${vertex22DY} L ${vertex62DX} ${vertex62DY} L ${vertex72DX} ${vertex72DY} L ${vertex32DX} ${vertex32DY} z"
+            }
+          ]
+        },
+        {
+          "description": "group of face: EFGH",
+          "type": "group",
+          "opacity": "${(-vertex13DX * (((vertex53DY - vertex13DY) * (vertex63DZ - vertex13DZ)) - ((vertex53DZ - vertex13DZ) * (vertex63DY - vertex13DY)))) + (-vertex13DY * (((vertex53DZ - vertex13DZ) * (vertex63DX - vertex13DX)) - ((vertex53DX - vertex13DX) * (vertex63DZ - vertex13DZ)))) + (-vertex13DZ * (((vertex53DX - vertex13DX) * (vertex63DY - vertex13DY)) - ((vertex53DY - vertex13DY) * (vertex63DX - vertex13DX)))) <= 0 ? 1 : 0}",
+          "items": [
+            {
+              "description": "face: EFGH",
+              "type": "path",
+              "style": "face",
+              "pathData": "M ${vertex12DX} ${vertex12DY} L ${vertex52DX} ${vertex52DY} L ${vertex62DX} ${vertex62DY} L ${vertex22DX} ${vertex22DY} z"
+            }
+          ]
+        },
+        {
+          "description": "group of face: ABFE",
+          "type": "group",
+          "opacity": "${(-vertex13DX * (((vertex23DY - vertex13DY) * (vertex33DZ - vertex13DZ)) - ((vertex23DZ - vertex13DZ) * (vertex33DY - vertex13DY)))) + (-vertex13DY * (((vertex23DZ - vertex13DZ) * (vertex33DX - vertex13DX)) - ((vertex23DX - vertex13DX) * (vertex33DZ - vertex13DZ)))) + (-vertex13DZ * (((vertex23DX - vertex13DX) * (vertex33DY - vertex13DY)) - ((vertex23DY - vertex13DY) * (vertex33DX - vertex13DX)))) <= 0 ? 1 : 0}",
+          "items": [
+            {
+              "description": "face: ABFE",
+              "type": "path",
+              "style": "face",
+              "pathData": "M ${vertex12DX} ${vertex12DY} L ${vertex22DX} ${vertex22DY} L ${vertex32DX} ${vertex32DY} L ${vertex42DX} ${vertex42DY} z"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "commands": {
+    "Calculate3DX": {
+      "parameters": [
+        {
+          "name": "radian",
+          "default": "@RADIAN_PER_FRAME"
+        },
+        {
+          "name": "cosine",
+          "default": "${Math.cos(radian)}"
+        },
+        {
+          "name": "sine",
+          "default": "${Math.sin(radian)}"
+        },
+        "propertyX",
+        "propertyZ",
+        "x",
+        "z"
+      ],
+      "commands": [
+        {
+          "type": "SetValue",
+          "property": "${propertyX}",
+          "value": "${((z - @CUBE_Z) * sine + (x - @CUBE_X) * cosine) + @CUBE_X}"
+        },
+        {
+          "type": "SetValue",
+          "property": "${propertyZ}",
+          "value": "${((z - @CUBE_Z) * cosine - (x - @CUBE_X) * sine) + @CUBE_Z}"
+        }
+      ]
+    },
+    "Calculate3DY": {
+      "parameters": [
+        {
+          "name": "radian",
+          "default": "@RADIAN_PER_FRAME"
+        },
+        {
+          "name": "cosine",
+          "default": "${Math.cos(radian)}"
+        },
+        {
+          "name": "sine",
+          "default": "${Math.sin(radian)}"
+        },
+        "propertyY",
+        "propertyZ",
+        "y",
+        "z"
+      ],
+      "commands": [
+        {
+          "type": "SetValue",
+          "property": "${propertyY}",
+          "value": "${((y - @CUBE_Y) * cosine - (z - @CUBE_Z) * sine) + @CUBE_Y}"
+        },
+        {
+          "type": "SetValue",
+          "property": "${propertyZ}",
+          "value": "${((y - @CUBE_Y) * sine + (z - @CUBE_Z) * cosine) + @CUBE_Z}"
+        }
+      ]
+    },
+    "Calculate2D": {
+      "parameters": [
+        "propertyX",
+        "propertyY",
+        "x",
+        "y",
+        "z"
+      ],
+      "commands": [
+        {
+          "type": "SetValue",
+          "property": "${propertyX}",
+          "value": "${x * (@FOCAL_LENGTH / z) + viewport.width * 0.5}"
+        },
+        {
+          "type": "SetValue",
+          "property": "${propertyY}",
+          "value": "${y * (@FOCAL_LENGTH / z) + viewport.height * 0.5}"
+        }
+      ]
+    },
+    "RotateX": {
+      "parameters": [
+        "radian",
+        {
+          "name": "oVertex83DY",
+          "default": "${vertex83DY}"
+        },
+        {
+          "name": "oVertex83DZ",
+          "default": "${vertex83DZ}"
+        },
+        {
+          "name": "oVertex73DY",
+          "default": "${vertex73DY}"
+        },
+        {
+          "name": "oVertex73DZ",
+          "default": "${vertex73DZ}"
+        },
+        {
+          "name": "oVertex63DY",
+          "default": "${vertex63DY}"
+        },
+        {
+          "name": "oVertex63DZ",
+          "default": "${vertex63DZ}"
+        },
+        {
+          "name": "oVertex53DY",
+          "default": "${vertex53DY}"
+        },
+        {
+          "name": "oVertex53DZ",
+          "default": "${vertex53DZ}"
+        },
+        {
+          "name": "oVertex43DY",
+          "default": "${vertex43DY}"
+        },
+        {
+          "name": "oVertex43DZ",
+          "default": "${vertex43DZ}"
+        },
+        {
+          "name": "oVertex33DY",
+          "default": "${vertex33DY}"
+        },
+        {
+          "name": "oVertex33DZ",
+          "default": "${vertex33DZ}"
+        },
+        {
+          "name": "oVertex23DY",
+          "default": "${vertex23DY}"
+        },
+        {
+          "name": "oVertex23DZ",
+          "default": "${vertex23DZ}"
+        },
+        {
+          "name": "oVertex13DY",
+          "default": "${vertex13DY}"
+        },
+        {
+          "name": "oVertex13DZ",
+          "default": "${vertex13DZ}"
+        }
+      ],
+      "commands": [
+        {
+          "type": "Calculate3DY",
+          "radian": "${radian}",
+          "propertyY": "vertex83DY",
+          "propertyZ": "vertex83DZ",
+          "y": "${oVertex83DY}",
+          "z": "${oVertex83DZ}"
+        },
+        {
+          "type": "Calculate3DY",
+          "radian": "${radian}",
+          "propertyY": "vertex73DY",
+          "propertyZ": "vertex73DZ",
+          "y": "${oVertex73DY}",
+          "z": "${oVertex73DZ}"
+        },
+        {
+          "type": "Calculate3DY",
+          "radian": "${radian}",
+          "propertyY": "vertex63DY",
+          "propertyZ": "vertex63DZ",
+          "y": "${oVertex63DY}",
+          "z": "${oVertex63DZ}"
+        },
+        {
+          "type": "Calculate3DY",
+          "radian": "${radian}",
+          "propertyY": "vertex53DY",
+          "propertyZ": "vertex53DZ",
+          "y": "${oVertex53DY}",
+          "z": "${oVertex53DZ}"
+        },
+        {
+          "type": "Calculate3DY",
+          "radian": "${radian}",
+          "propertyY": "vertex43DY",
+          "propertyZ": "vertex43DZ",
+          "y": "${oVertex43DY}",
+          "z": "${oVertex43DZ}"
+        },
+        {
+          "type": "Calculate3DY",
+          "radian": "${radian}",
+          "propertyY": "vertex33DY",
+          "propertyZ": "vertex33DZ",
+          "y": "${oVertex33DY}",
+          "z": "${oVertex33DZ}"
+        },
+        {
+          "type": "Calculate3DY",
+          "radian": "${radian}",
+          "propertyY": "vertex23DY",
+          "propertyZ": "vertex23DZ",
+          "y": "${oVertex23DY}",
+          "z": "${oVertex23DZ}"
+        },
+        {
+          "type": "Calculate3DY",
+          "radian": "${radian}",
+          "propertyY": "vertex13DY",
+          "propertyZ": "vertex13DZ",
+          "y": "${oVertex13DY}",
+          "z": "${oVertex13DZ}"
+        }
+      ]
+    },
+    "RotateY": {
+      "parameters": [
+        "radian",
+        {
+          "name": "oVertex83DX",
+          "default": "${vertex83DX}"
+        },
+        {
+          "name": "oVertex83DZ",
+          "default": "${vertex83DZ}"
+        },
+        {
+          "name": "oVertex73DX",
+          "default": "${vertex73DX}"
+        },
+        {
+          "name": "oVertex73DZ",
+          "default": "${vertex73DZ}"
+        },
+        {
+          "name": "oVertex63DX",
+          "default": "${vertex63DX}"
+        },
+        {
+          "name": "oVertex63DZ",
+          "default": "${vertex63DZ}"
+        },
+        {
+          "name": "oVertex53DX",
+          "default": "${vertex53DX}"
+        },
+        {
+          "name": "oVertex53DZ",
+          "default": "${vertex53DZ}"
+        },
+        {
+          "name": "oVertex43DX",
+          "default": "${vertex43DX}"
+        },
+        {
+          "name": "oVertex43DZ",
+          "default": "${vertex43DZ}"
+        },
+        {
+          "name": "oVertex33DX",
+          "default": "${vertex33DX}"
+        },
+        {
+          "name": "oVertex33DZ",
+          "default": "${vertex33DZ}"
+        },
+        {
+          "name": "oVertex23DX",
+          "default": "${vertex23DX}"
+        },
+        {
+          "name": "oVertex23DZ",
+          "default": "${vertex23DZ}"
+        },
+        {
+          "name": "oVertex13DX",
+          "default": "${vertex13DX}"
+        },
+        {
+          "name": "oVertex13DZ",
+          "default": "${vertex13DZ}"
+        }
+      ],
+      "commands": [
+        {
+          "type": "Calculate3DX",
+          "radian": "${radian}",
+          "propertyX": "vertex83DX",
+          "propertyZ": "vertex83DZ",
+          "x": "${oVertex83DX}",
+          "z": "${oVertex83DZ}"
+        },
+        {
+          "type": "Calculate3DX",
+          "radian": "${radian}",
+          "propertyX": "vertex73DX",
+          "propertyZ": "vertex73DZ",
+          "x": "${oVertex73DX}",
+          "z": "${oVertex73DZ}"
+        },
+        {
+          "type": "Calculate3DX",
+          "radian": "${radian}",
+          "propertyX": "vertex63DX",
+          "propertyZ": "vertex63DZ",
+          "x": "${oVertex63DX}",
+          "z": "${oVertex63DZ}"
+        },
+        {
+          "type": "Calculate3DX",
+          "radian": "${radian}",
+          "propertyX": "vertex53DX",
+          "propertyZ": "vertex53DZ",
+          "x": "${oVertex53DX}",
+          "z": "${oVertex53DZ}"
+        },
+        {
+          "type": "Calculate3DX",
+          "radian": "${radian}",
+          "propertyX": "vertex43DX",
+          "propertyZ": "vertex43DZ",
+          "x": "${oVertex43DX}",
+          "z": "${oVertex43DZ}"
+        },
+        {
+          "type": "Calculate3DX",
+          "radian": "${radian}",
+          "propertyX": "vertex33DX",
+          "propertyZ": "vertex33DZ",
+          "x": "${oVertex33DX}",
+          "z": "${oVertex33DZ}"
+        },
+        {
+          "type": "Calculate3DX",
+          "radian": "${radian}",
+          "propertyX": "vertex23DX",
+          "propertyZ": "vertex23DZ",
+          "x": "${oVertex23DX}",
+          "z": "${oVertex23DZ}"
+        },
+        {
+          "type": "Calculate3DX",
+          "radian": "${radian}",
+          "propertyX": "vertex13DX",
+          "propertyZ": "vertex13DZ",
+          "x": "${oVertex13DX}",
+          "z": "${oVertex13DZ}"
+        }
+      ]
+    },
+    "3Dto2D": {
+      "commands": [
+        {
+          "type": "Calculate2D",
+          "propertyX": "vertex12DX",
+          "propertyY": "vertex12DY",
+          "x": "${vertex13DX}",
+          "y": "${vertex13DY}",
+          "z": "${vertex13DZ}"
+        },
+        {
+          "type": "Calculate2D",
+          "propertyX": "vertex22DX",
+          "propertyY": "vertex22DY",
+          "x": "${vertex23DX}",
+          "y": "${vertex23DY}",
+          "z": "${vertex23DZ}"
+        },
+        {
+          "type": "Calculate2D",
+          "propertyX": "vertex32DX",
+          "propertyY": "vertex32DY",
+          "x": "${vertex33DX}",
+          "y": "${vertex33DY}",
+          "z": "${vertex33DZ}"
+        },
+        {
+          "type": "Calculate2D",
+          "propertyX": "vertex42DX",
+          "propertyY": "vertex42DY",
+          "x": "${vertex43DX}",
+          "y": "${vertex43DY}",
+          "z": "${vertex43DZ}"
+        },
+        {
+          "type": "Calculate2D",
+          "propertyX": "vertex52DX",
+          "propertyY": "vertex52DY",
+          "x": "${vertex53DX}",
+          "y": "${vertex53DY}",
+          "z": "${vertex53DZ}"
+        },
+        {
+          "type": "Calculate2D",
+          "propertyX": "vertex62DX",
+          "propertyY": "vertex62DY",
+          "x": "${vertex63DX}",
+          "y": "${vertex63DY}",
+          "z": "${vertex63DZ}"
+        },
+        {
+          "type": "Calculate2D",
+          "propertyX": "vertex72DX",
+          "propertyY": "vertex72DY",
+          "x": "${vertex73DX}",
+          "y": "${vertex73DY}",
+          "z": "${vertex73DZ}"
+        },
+        {
+          "type": "Calculate2D",
+          "propertyX": "vertex82DX",
+          "propertyY": "vertex82DY",
+          "x": "${vertex83DX}",
+          "y": "${vertex83DY}",
+          "z": "${vertex83DZ}"
+        }
+      ]
+    }
+  },
+  "layouts": {
+    "Cube": {
+      "parameters": [],
+      "item": {
+        "type": "Container",
+        "bind": [
+          {
+            "name": "vertex13DX",
+            "type": "number",
+            "value": "${@CUBE_X - @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex13DY",
+            "type": "number",
+            "value": "${@CUBE_Y - @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex13DZ",
+            "type": "number",
+            "value": "${@CUBE_Z - @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex23DX",
+            "type": "number",
+            "value": "${@CUBE_X + @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex23DY",
+            "type": "number",
+            "value": "${@CUBE_Y - @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex23DZ",
+            "type": "number",
+            "value": "${@CUBE_Z - @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex33DX",
+            "type": "number",
+            "value": "${@CUBE_X + @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex33DY",
+            "type": "number",
+            "value": "${@CUBE_Y + @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex33DZ",
+            "type": "number",
+            "value": "${@CUBE_Z - @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex43DX",
+            "type": "number",
+            "value": "${@CUBE_X - @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex43DY",
+            "type": "number",
+            "value": "${@CUBE_Y + @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex43DZ",
+            "type": "number",
+            "value": "${@CUBE_Z - @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex53DX",
+            "type": "number",
+            "value": "${@CUBE_X - @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex53DY",
+            "type": "number",
+            "value": "${@CUBE_Y - @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex53DZ",
+            "type": "number",
+            "value": "${@CUBE_Z + @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex63DX",
+            "type": "number",
+            "value": "${@CUBE_X + @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex63DY",
+            "type": "number",
+            "value": "${@CUBE_Y - @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex63DZ",
+            "type": "number",
+            "value": "${@CUBE_Z + @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex73DX",
+            "type": "number",
+            "value": "${@CUBE_X + @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex73DY",
+            "type": "number",
+            "value": "${@CUBE_Y + @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex73DZ",
+            "type": "number",
+            "value": "${@CUBE_Z + @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex83DX",
+            "type": "number",
+            "value": "${@CUBE_X - @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex83DY",
+            "type": "number",
+            "value": "${@CUBE_Y + @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex83DZ",
+            "type": "number",
+            "value": "${@CUBE_Z + @CUBE_SIZE}"
+          },
+          {
+            "name": "vertex12DX",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "vertex12DY",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "vertex22DX",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "vertex22DY",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "vertex32DX",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "vertex32DY",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "vertex42DX",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "vertex42DY",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "vertex52DX",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "vertex52DY",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "vertex62DX",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "vertex62DY",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "vertex72DX",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "vertex72DY",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "vertex82DX",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "vertex82DY",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "vertex82DY",
+            "type": "number",
+            "value": "0"
+          },
+          {
+            "name": "cubeRadian",
+            "type": "number",
+            "value": "${DeviceState.poise.absoluteAngle * Math.PI / 180}"
+          }
+        ],
+        "onMount": [
+          {
+            "type": "3Dto2D"
+          }
+        ],
+        "handleTick": [
+          {
+            "minimumDelay": "@FRAMES_PER_SECOND",
+            "commands": [
+              {
+                "when": "${(cubeRadian + @RADIAN_PER_FRAME) < (DeviceState.poise.absoluteAngle * Math.PI / 180)}",
+                "type": "Sequential",
+                "commands": [
+                  {
+                    "type": "RotateY"
+                  },
+                  {
+                    "type": "3Dto2D"
+                  },
+                  {
+                    "type": "SetValue",
+                    "property": "cubeRadian",
+                    "value": "${cubeRadian + @RADIAN_PER_FRAME}"
+                  }
+                ]
+              },
+              {
+                "when": "${(cubeRadian - @RADIAN_PER_FRAME) > (DeviceState.poise.absoluteAngle * Math.PI / 180)}",
+                "type": "Sequential",
+                "commands": [
+                  {
+                    "type": "RotateY",
+                    "radian": "${@RADIAN_PER_FRAME * -1}"
+                  },
+                  {
+                    "type": "3Dto2D"
+                  },
+                  {
+                    "type": "SetValue",
+                    "property": "cubeRadian",
+                    "value": "${cubeRadian - @RADIAN_PER_FRAME}"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "items": [
+          {
+            "type": "VectorGraphic",
+            "source": "Cube",
+            "description": "we pass all 2d and 3d coordinates of our vertices",
+            "cubeRadian": "${cubeRadian}",
+            "deviceRadian": "${(DeviceState.poise.absoluteAngle * Math.PI / 180)}",
+            "vertex12DX": "${vertex12DX}",
+            "vertex12DY": "${vertex12DY}",
+            "vertex22DX": "${vertex22DX}",
+            "vertex22DY": "${vertex22DY}",
+            "vertex32DX": "${vertex32DX}",
+            "vertex32DY": "${vertex32DY}",
+            "vertex42DX": "${vertex42DX}",
+            "vertex42DY": "${vertex42DY}",
+            "vertex52DX": "${vertex52DX}",
+            "vertex52DY": "${vertex52DY}",
+            "vertex62DX": "${vertex62DX}",
+            "vertex62DY": "${vertex62DY}",
+            "vertex72DX": "${vertex72DX}",
+            "vertex72DY": "${vertex72DY}",
+            "vertex82DX": "${vertex82DX}",
+            "vertex82DY": "${vertex82DY}",
+            "vertex13DX": "${vertex13DX}",
+            "vertex13DY": "${vertex13DY}",
+            "vertex13DZ": "${vertex13DZ}",
+            "vertex23DX": "${vertex23DX}",
+            "vertex23DY": "${vertex23DY}",
+            "vertex23DZ": "${vertex23DZ}",
+            "vertex33DX": "${vertex33DX}",
+            "vertex33DY": "${vertex33DY}",
+            "vertex33DZ": "${vertex33DZ}",
+            "vertex43DX": "${vertex43DX}",
+            "vertex43DY": "${vertex43DY}",
+            "vertex43DZ": "${vertex43DZ}",
+            "vertex53DX": "${vertex53DX}",
+            "vertex53DY": "${vertex53DY}",
+            "vertex53DZ": "${vertex53DZ}",
+            "vertex63DX": "${vertex63DX}",
+            "vertex63DY": "${vertex63DY}",
+            "vertex63DZ": "${vertex63DZ}",
+            "vertex73DX": "${vertex73DX}",
+            "vertex73DY": "${vertex73DY}",
+            "vertex73DZ": "${vertex73DZ}",
+            "vertex83DX": "${vertex83DX}",
+            "vertex83DY": "${vertex83DY}",
+            "vertex83DZ": "${vertex83DZ}"
+          }
+        ]
+      }
+    }
+  },
+  "mainTemplate": {
+    "parameters": [
+      "payload"
+    ],
+    "items": [
+      {
+        "type": "Container",
+        "width": "100vw",
+        "height": "100vh",
+        "items": [
+          {
+            "type": "Cube"
+          }
+        ]
+      }
+    ]
+  }
+}
