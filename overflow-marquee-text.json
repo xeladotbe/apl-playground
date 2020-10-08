@@ -1,0 +1,68 @@
+{
+  "type": "APL",
+  "version": "1.4",
+  "settings": {},
+  "theme": "dark",
+  "import": [],
+  "resources": [],
+  "styles": {},
+  "onMount": [],
+  "graphics": {},
+  "commands": {},
+  "layouts": {},
+  "mainTemplate": {
+    "parameters": [
+      "payload"
+    ],
+    "items": [
+      {
+        "type": "Container",
+        "width": "100vw",
+        "items": [
+          {
+            "bind": [
+              {
+                "name": "x",
+                "type": "number",
+                "value": "0"
+              },
+              {
+                "name": "y",
+                "type": "number",
+                "value": "-1"
+              }
+            ],
+            "type": "Text",
+            "fontSize": "80",
+            "width": "5000vw",
+            "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr.",
+            "transform": [
+              {
+                "translateX": "${x}"
+              }
+            ],
+            "handleTick": [
+              {
+                "minimumDelay": "${1000 / 60}",
+                "commands": [
+                  {
+                    "type": "SetValue",
+                    "property": "x",
+                    "value": "${x + y}"
+                  },
+                  {
+                    "description": "750 is the distance the text should move before changing direction",
+                    "when": "${x % 750 == 0}",
+                    "type": "SetValue",
+                    "property": "y",
+                    "value": "${y * -1}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
