@@ -238,8 +238,56 @@
           }
         ]
       },
+      "AutoPageChange": {
+        "commands": [
+          {
+            "when": "${direction == 'forward'}",
+            "type": "NextPage"
+          },
+          {
+            "when": "${direction == backward'}",
+            "type": "PrevPage"
+          }
+        ]
+      },
+      "PrevPage": {
+        "commands": [
+          {
+            "type": "SetValue",
+            "property": "direction",
+            "value": "backward"
+          },
+          {
+            "when": "${pagerItems[page].pageWillDisappear}",
+            "type": "Sequential",
+            "sequencer": "auto",
+            "commands": [
+              "${pagerItems[page].pageWillDisappear}"
+            ]
+          },
+          {
+            "when": "${page > 0}",
+            "type": "SetPage",
+            "sequencer": "auto",
+            "position": "relative",
+            "value": -1
+          },
+          {
+            "when": "${page == 0}",
+            "type": "SetPage",
+            "sequencer": "auto",
+            "position": "absolute",
+            "value": "${pages - 1}"
+          }
+        ]
+      },
       "NextPage": {
         "commands": [
+          {
+            "type": "SetValue",
+            "property": "direction",
+            "value": "forward"
+          },
           {
             "when": "${pagerItems[page].pageWillDisappear}",
             "type": "Sequential",
@@ -291,6 +339,10 @@
                 {
                   "name": "pagerItems",
                   "value": "${payload.currentView.properties.pagerItems}"
+                },
+                {
+                  "name": "direction",
+                  "value": "forward"
                 },
                 {
                   "name": "page",
@@ -456,7 +508,7 @@
                 "delay": 2500
               },
               {
-                "type": "NextPage"
+                "type": "AutoPageChange"
               }
             ]
           },
@@ -500,7 +552,7 @@
                 "delay": 2500
               },
               {
-                "type": "NextPage"
+                "type": "AutoPageChange"
               }
             ]
           },
@@ -544,7 +596,7 @@
                 "delay": 2500
               },
               {
-                "type": "NextPage"
+                "type": "AutoPageChange"
               }
             ]
           },
@@ -588,7 +640,7 @@
                 "delay": 2500
               },
               {
-                "type": "NextPage"
+                "type": "AutoPageChange"
               }
             ]
           }
